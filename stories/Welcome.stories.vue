@@ -8,11 +8,7 @@ export default {
     component: Welcome
 }
 
-export const ToStorybook = () => ({
-    components: { Welcome },
-    template: '<welcome :showApp="action" />',
-    methods: { action: linkTo('Button') }
-})
+export const ToStorybook = () => Welcome
 
 ToStorybook.story = {
     name: 'to Storybook'
