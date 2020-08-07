@@ -1,5 +1,5 @@
 <template>
-    <FileCard img-url="thumbs/756624_1579681076.png" />
+    <FileCard img-url="thumbs/file_thumnail.png" />
 </template>
 
 <script>
