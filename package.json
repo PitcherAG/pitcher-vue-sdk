@@ -17,7 +17,8 @@
         "npm link": "npm link",
         "npm publish": "npm publish",
         "test:unit": "cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit",
-        "yarn link": "yarn link"
+        "yarn link": "yarn link",
+        "storybook": "start-storybook -s ./.storybook/public -p 9001"
     },
     "main": "src",
     "dependencies": {
@@ -58,7 +59,13 @@
         "rimraf": "^3.0.2",
         "sass": "^1.26.3",
         "sass-loader": "^8.0.2",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.11",
+        "@storybook/addon-actions": "^5.3.19",
+        "@storybook/addon-links": "^5.3.19",
+        "@storybook/addons": "^5.3.19",
+        "@storybook/vue": "^5.3.19",
+        "babel-loader": "^8.1.0",
+        "babel-preset-vue": "^2.0.2"
     },
     "peerDependencies": {
         "@vue/composition-api": "^0.6.6",
