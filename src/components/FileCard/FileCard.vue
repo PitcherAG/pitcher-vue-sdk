@@ -126,7 +126,7 @@ export default defineComponent({
         const styles = computed(() => ({
             containerH: `${parseInt(props.height)}px`,
             contentH: `${Math.ceil(parseInt(props.height) * 0.71)}px`,
-            imgUrl: `url(${props.imgUrl})`
+            imgUrl: `url("${props.imgUrl}")`
         }))
 
         return { ...toRefs(state), styles, emit }
