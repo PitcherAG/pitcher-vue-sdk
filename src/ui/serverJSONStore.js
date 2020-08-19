@@ -39,13 +39,15 @@ class ServerJSONStore {
     }
 
     setMainNav(category) {
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem(`${this.state.appID}.mainNavItem`, category.ID)
-        }
-        fireEvent('setCategory', category)
-        if (this.firstLoad) {
-            this.firstLoad = false
-            fireEvent('uiReady')
+        if (category) {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.setItem(`${this.state.appID}.mainNavItem`, category.ID)
+            }
+            fireEvent('setCategory', category)
+            if (this.firstLoad) {
+                this.firstLoad = false
+                fireEvent('uiReady')
+            }
         }
     }
 
@@ -159,4 +161,9 @@ window.loadPresentations = function(presentationsObject) {
         presentationsObject = JSON.parse(presentationsObject)
     }
     window.presentationsObject = presentationsObject
+}
+
+window.setMainNav = function(mainNavID) {
+    const store = useServerJSONStore()
+    store.setMainNav(store.categories && store.categories.find(c => c.ID == mainNavID))
 }
