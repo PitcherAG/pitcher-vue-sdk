@@ -1,0 +1,162 @@
+import { fireEvent } from '../event'
+import { waitForWindowProp } from '../utils'
+import { createStore } from '../store'
+import { reactive } from '@vue/composition-api'
+
+const UI_CONSTANTS = {
+    IGNORE_CUSTOM_TYPE: 2,
+    PARENT_CATEGORY_VALUE: '0'
+}
+
+class ServerJSONStore {
+    id = 'serverJSON'
+    firstLoad = true
+    state = reactive({
+        files: [],
+        slides: null,
+        config: null,
+        groups: null,
+        appID: null,
+        categories: null,
+        supportEmail: null,
+        deviceName: null,
+        metadata: null,
+        messages: null,
+        appName: null,
+        documentPath: null,
+        presentations: [],
+        customs: []
+    })
+
+    getInitialCategory() {
+        if (this.state.categories) {
+            return (
+                this.state.categories.find(c => c.isDefault) ||
+                this.state.categories.find(c => c.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+            )
+        }
+        return null
+    }
+
+    setMainNav(category) {
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(`${this.state.appID}.mainNavItem`, category.ID)
+        }
+        fireEvent('setCategory', category)
+        if (this.firstLoad) {
+            this.firstLoad = false
+            fireEvent('uiReady')
+        }
+    }
+
+    showUI() {
+        if (this.state.categories) {
+            const initialCategory = (!this.firstLoad && this.getLastCategory()) || this.getInitialCategory()
+            if (initialCategory) {
+                this.setMainNav(initialCategory)
+            }
+        } else {
+            fireEvent('uiReady')
+        }
+    }
+
+    isFileExpiredOrNotReady(now, startDate, endDate) {
+        if (typeof startDate === 'undefined' || typeof endDate === 'undefined') return false
+        if (startDate == null || endDate == null) return false
+        if (startDate == 0 || endDate == 0) return false
+        return startDate > now || endDate < now
+    }
+
+    shouldShowInUI(now, file) {
+        if (
+            file.ID[0] == 'T' ||
+            file.typeV == 7 ||
+            file.typeV == -1 ||
+            file.typeV == 0 ||
+            this.isFileExpiredOrNotReady(now, file.startDate, file.endDate)
+        ) {
+            return false
+        }
+        return true
+    }
+
+    parseCustomPdf(file) {
+        file.ID = file.slideOrder.split(',')[0].split('|')[0]
+        file.isCustomPdf = true
+        return file
+    }
+
+    parsePresentation(file) {
+        try {
+            if (file.isCustom != UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
+                if (typeof file.ID === 'undefined' || file.ID == null) {
+                    file = this.parseCustomPdf(file)
+                }
+                if (file.vSubFolder == null) {
+                    file.containsMultiple = true
+                    file.vSubFolder = file.slideOrder.split(',')[0].split('|')[0]
+                    file.ID = file.slideOrder.split(',')[0].split('|')[0]
+                    if (file.vSubFolder.indexOf('_') == -1) {
+                        file.isCustomPdf = true
+                    } else {
+                        file.ID = '' + parseInt(file.ID)
+                    }
+                }
+                file.isCustom ? this.state.customs.push(file) : this.state.presentations.push(file)
+            }
+            return true
+        } catch (e) {
+            fireEvent('Error', e)
+        }
+        return false
+    }
+}
+
+export const useServerJSONStore = () => {
+    return createStore(new ServerJSONStore())
+}
+
+export async function loadServerJSON(timeout = 5) {
+    const store = useServerJSONStore()
+
+    fireEvent('askJSON')
+
+    const serverJSON = await waitForWindowProp('serverJSON', timeout)
+
+    fireEvent('loadPresentationsFromDB', {})
+
+    const presentationsObject = await waitForWindowProp('presentationsObject', timeout)
+
+    if (serverJSON) {
+        const now = new Date().getTime() / 1000
+        serverJSON.files.forEach(f => {
+            f.shouldShowInUI = store.shouldShowInUI(now, f)
+            f.thumbnailUrl = `${window.documentPath}${f.thumb}`
+        })
+        Object.assign(store.state, window.serverJSON)
+        store.state.documentPath = window.documentPath
+        if (presentationsObject) {
+            presentationsObject.forEach(p => store.parsePresentation(p))
+        }
+    }
+
+    store.showUI()
+
+    return store.state
+}
+
+window.gotJSON = function(serverJSONV, documentPathV) {
+    try {
+        window.documentPath = documentPathV
+        window.serverJSON = JSON.parse(serverJSONV)
+    } catch (e) {
+        fireEvent('Error', e)
+    }
+}
+
+window.loadPresentations = function(presentationsObject) {
+    if (typeof presentationsObject === 'string') {
+        presentationsObject = JSON.parse(presentationsObject)
+    }
+    window.presentationsObject = presentationsObject
+}

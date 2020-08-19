@@ -27,5 +27,8 @@ export * from './utils'
 // Vue Components
 export * from './components/export.js'
 
+//UI Instance
+export * from './instance/serverJSONStore.js'
+
 // Mixins
 export { default as ModalMixin } from './semantic/mixins/modal.js'
