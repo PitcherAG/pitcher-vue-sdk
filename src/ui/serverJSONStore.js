@@ -88,7 +88,23 @@ class ServerJSONStore {
         return file
     }
 
-    parsePresentation(file) {
+    parsePresentations(files) {
+        this.state.customs = []
+        this.state.presentations = []
+        files.forEach(file => this.parseSinglePresentation(file))
+    }
+
+    addFileAsCustom(file) {
+        const original = this.state.files.find(f => f.ID == file.ID)
+        if (original) {
+            const customFile = {}
+            Object.assign(customFile, original)
+            Object.assign(customFile, file)
+            this.state.customs.push(customFile)
+        }
+    }
+
+    parseSinglePresentation(file) {
         try {
             if (file.isCustom != UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
                 if (typeof file.ID === 'undefined' || file.ID == null) {
@@ -104,7 +120,7 @@ class ServerJSONStore {
                         file.ID = '' + parseInt(file.ID)
                     }
                 }
-                file.isCustom ? this.state.customs.push(file) : this.state.presentations.push(file)
+                file.isCustom ? this.addFileAsCustom(file) : this.state.presentations.push(file)
             }
             return true
         } catch (e) {
@@ -138,7 +154,7 @@ export async function loadServerJSON(timeout = 5) {
         Object.assign(store.state, window.serverJSON)
         store.state.documentPath = window.documentPath
         if (presentationsObject) {
-            presentationsObject.forEach(p => store.parsePresentation(p))
+            store.parsePresentations(presentationsObject)
         }
     }
 
@@ -160,7 +176,16 @@ window.loadPresentations = function(presentationsObject) {
     if (typeof presentationsObject === 'string') {
         presentationsObject = JSON.parse(presentationsObject)
     }
+    if (window.presentationsObject) {
+        const store = useServerJSONStore()
+        store.parsePresentations(window.presentationsObject)
+    }
     window.presentationsObject = presentationsObject
+}
+
+window.add = function() {
+    const store = useServerJSONStore()
+    store.state.customs.push({ timeValue: new Date().getTime() })
 }
 
 window.setMainNav = function(mainNavID) {
