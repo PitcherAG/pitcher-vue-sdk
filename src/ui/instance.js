@@ -1,27 +1,29 @@
 import { fireEvent } from '../event'
 import { loadServerJSON, useServerJSONStore } from './serverJSONStore'
 import { computed } from '@vue/composition-api'
+import { FileActions } from './actions/file'
 
 class PitcherInstance {
-    #store
+    store
+    fileActions = FileActions
 
     constructor() {}
 
     async init() {
         await loadServerJSON()
-        this.#store = useServerJSONStore()
+        this.store = useServerJSONStore()
     }
 
     get uiFiles() {
-        return computed(() => this.#store.state.files.filter(f => f.shouldShowInUI))
+        return computed(() => this.store.state.files.filter(f => f.shouldShowInUI))
     }
 
     get customFiles() {
-        return computed(() => this.#store.state.customs)
+        return computed(() => this.store.state.customs)
     }
 
     get presentations() {
-        return computed(() => this.#store.state.presentations)
+        return computed(() => this.store.state.presentations)
     }
 
     editFileWithId(file) {
@@ -43,6 +45,10 @@ class PitcherInstance {
 
     createSlideSet() {
         this.editFileWithId()
+    }
+
+    openContent(file) {
+        this.fileActions.openContent(file)
     }
 }
 

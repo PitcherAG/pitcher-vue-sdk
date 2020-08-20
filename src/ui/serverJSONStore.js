@@ -104,6 +104,14 @@ class ServerJSONStore {
         }
     }
 
+    mergePresentation(file) {
+        this.state.presentations.push(file)
+        const original = this.state.files.find(f => f.ID == file.ID)
+        if (original) {
+            Object.assign(original, file)
+        }
+    }
+
     parseSinglePresentation(file) {
         try {
             if (file.isCustom != UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
@@ -120,7 +128,7 @@ class ServerJSONStore {
                         file.ID = '' + parseInt(file.ID)
                     }
                 }
-                file.isCustom ? this.addFileAsCustom(file) : this.state.presentations.push(file)
+                file.isCustom ? this.addFileAsCustom(file) : this.mergePresentation(file)
             }
             return true
         } catch (e) {
