@@ -123,7 +123,8 @@ class Actions {
     loadInteractive(file, parameters) {
         const path = file.vUrl
         const title = this.addSlashes(file.body)
-        let allowPortrait = 0, showBar = 1
+        let allowPortrait = 0,
+            showBar = 1
         if (file.extra2 != null) {
             const parts = file.extra2.split('|')
             showBar = parts.length > 0 && parts[0] == 1 ? 0 : 1

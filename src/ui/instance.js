@@ -1,6 +1,5 @@
 import { fireEvent } from '../event'
 import { loadServerJSON, useServerJSONStore } from './serverJSONStore'
-import { computed } from '@vue/composition-api'
 import { FileActions } from './actions/file'
 
 class PitcherInstance {
@@ -15,15 +14,16 @@ class PitcherInstance {
     }
 
     get uiFiles() {
-        return computed(() => this.store.state.files.filter(f => f.shouldShowInUI))
+        //return computed(() => this.store.state.files.filter(f => f.shouldShowInUI))
+        return this.store.state.files.filter(f => f.shouldShowInUI)
     }
 
     get customFiles() {
-        return computed(() => this.store.state.customs)
+        return this.store.state.customs
     }
 
     get presentations() {
-        return computed(() => this.store.state.presentations)
+        return this.store.state.presentations
     }
 
     editFileWithId(file) {
