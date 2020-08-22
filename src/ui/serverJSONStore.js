@@ -17,7 +17,7 @@ class ServerJSONStore {
         config: null,
         groups: null,
         appID: null,
-        categories: null,
+        categories: [],
         supportEmail: null,
         deviceName: null,
         metadata: null,

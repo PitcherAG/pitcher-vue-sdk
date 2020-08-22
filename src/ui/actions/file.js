@@ -146,6 +146,23 @@ class Actions {
             this.#categoryActionMapping[file.category](file, parameters)
         }
     }
+
+    editFileWithId(file) {
+        if (file) {
+            fireEvent('editPresentation', {
+                dataOfPres: file,
+                chapters: [
+                    {
+                        nameV: 'Slides',
+                        startIndex: 0,
+                        endIndex: file.vNumber
+                    }
+                ]
+            })
+        } else {
+            fireEvent('editPresentation', { mix: true, allowMix: true })
+        }
+    }
 }
 
 const FileActions = new Actions()

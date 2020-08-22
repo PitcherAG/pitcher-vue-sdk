@@ -25,29 +25,24 @@ class PitcherInstance {
         return this.store.state.presentations
     }
 
-    editFileWithId(file) {
-        if (file) {
-            fireEvent('editPresentation', {
-                dataOfPres: file,
-                chapters: [
-                    {
-                        nameV: 'Slides',
-                        startIndex: 0,
-                        endIndex: file.vNumber
-                    }
-                ]
-            })
-        } else {
-            fireEvent('editPresentation', { mix: true, allowMix: true })
-        }
-    }
-
     createSlideSet() {
-        this.editFileWithId()
+        this.fileActions.editFileWithId()
     }
 
     openContent(file) {
         this.fileActions.openContent(file)
+    }
+
+    get categories() {
+        return this.store.state.categories
+    }
+
+    get parentCategories() {
+        return this.store.state.categories.filter(c => c.parentCategory == '0')
+    }
+
+    get subCategories() {
+        return this.store.state.categories.filter(c => c.parentCategory == '-1')
     }
 }
 
