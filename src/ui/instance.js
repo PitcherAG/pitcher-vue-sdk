@@ -14,7 +14,6 @@ class PitcherInstance {
     }
 
     get uiFiles() {
-        //return computed(() => this.store.state.files.filter(f => f.shouldShowInUI))
         return this.store.state.files.filter(f => f.shouldShowInUI)
     }
 
