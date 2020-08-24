@@ -25,7 +25,8 @@ class ServerJSONStore {
         appName: null,
         documentPath: null,
         presentations: [],
-        customs: []
+        customs: [],
+        category: {}
     })
 
     getInitialCategory() {
@@ -43,7 +44,8 @@ class ServerJSONStore {
             if (typeof localStorage !== 'undefined') {
                 localStorage.setItem(`${this.state.appID}.mainNavItem`, category.ID)
             }
-            fireEvent('setCategory', category)
+            fireEvent('setCategory', { category: JSON.stringify(category) })
+            this.state.category = category
             if (this.firstLoad) {
                 this.firstLoad = false
                 fireEvent('uiReady')
@@ -191,12 +193,11 @@ window.loadPresentations = function(presentationsObject) {
     window.presentationsObject = presentationsObject
 }
 
-window.add = function() {
-    const store = useServerJSONStore()
-    store.state.customs.push({ timeValue: new Date().getTime() })
-}
-
 window.setMainNav = function(mainNavID) {
     const store = useServerJSONStore()
     store.setMainNav(store.categories && store.categories.find(c => c.ID == mainNavID))
+}
+
+window.filterJSON = function() {
+    
 }

@@ -12,7 +12,7 @@
             />
             <!-- Favorite -->
             <div class="file-card__stacked button left" @click="emit('onClickFavorite')">
-                <i class="star icon large" :class="{ outline: !isFavorite ? 'outline' : '' }" />
+                <i class="icon large" :class="[{ outline: !isFavorite ? 'outline' : '' }, favoriteIcon]" />
             </div>
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
@@ -70,6 +70,10 @@ export default defineComponent({
         body: {
             type: String,
             default: ''
+        },
+        favoriteIcon: {
+            type: String,
+            default: 'star'
         },
         imgUrl: String,
         date: String,

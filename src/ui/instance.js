@@ -44,6 +44,14 @@ class PitcherInstance {
     get subCategories() {
         return this.store.state.categories.filter(c => c.parentCategory == '-1')
     }
+
+    get category() {
+        return this.store.state.category
+    }
+
+    set category(category) {
+        this.store.setMainNav(category)
+    }
 }
 
 const Instance = new PitcherInstance()
