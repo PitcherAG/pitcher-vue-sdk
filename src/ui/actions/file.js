@@ -163,6 +163,10 @@ class Actions {
             fireEvent('editPresentation', { mix: true, allowMix: true })
         }
     }
+
+    sendPickingContent(fileIds, via) {
+        fireEvent('sendPickingContent', { fileIDs: fileIds, via: via })
+    }
 }
 
 const FileActions = new Actions()

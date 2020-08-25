@@ -1,4 +1,3 @@
-import { fireEvent } from '../event'
 import { loadServerJSON, useServerJSONStore } from './serverJSONStore'
 import { FileActions } from './actions/file'
 
@@ -51,6 +50,10 @@ class PitcherInstance {
 
     set category(category) {
         this.store.setMainNav(category)
+    }
+
+    sendPickingContent(fileIds, via) {
+        this.fileActions.sendPickingContent(fileIds, via)
     }
 }
 

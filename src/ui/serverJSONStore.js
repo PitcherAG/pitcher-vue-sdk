@@ -198,6 +198,4 @@ window.setMainNav = function(mainNavID) {
     store.setMainNav(store.categories && store.categories.find(c => c.ID == mainNavID))
 }
 
-window.filterJSON = function() {
-    
-}
+window.filterJSON = function() {}
