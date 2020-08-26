@@ -16,7 +16,7 @@
             </div>
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
-                <div class="ui red mini label">{{ newText }}</div>
+                <div class="ui red mini label" :class="newIconClass">{{ newText }}</div>
             </div>
 
             <!-- Actions -->
@@ -50,7 +50,10 @@
         <!-- File name -->
         <div class="file-card__file-name">{{ body }}</div>
         <!-- Keywords -->
-        <div v-if="keywords.length > 0" class="mt-1">
+        <div v-if="hasKeywordsSlot" class="mt-1">
+            <slot name="keywords" />
+        </div>
+        <div v-else-if="keywords.length > 0" class="mt-1">
             <span class="ui text small file-card__keywords">
                 {{ keywords }}
             </span>
@@ -75,6 +78,7 @@ export default defineComponent({
             type: String,
             default: 'star'
         },
+        newIconClass: String,
         imgUrl: String,
         date: String,
         keywords: {
@@ -124,7 +128,8 @@ export default defineComponent({
     setup(props, { slots, emit }) {
         const state = reactive({
             optionsExpanded: false,
-            hasItemsSlot: !!slots.items
+            hasItemsSlot: !!slots.items,
+            hasKeywordsSlot: !!slots.keywords
         })
 
         const styles = computed(() => ({

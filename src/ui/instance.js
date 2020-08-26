@@ -1,15 +1,18 @@
 import { loadServerJSON, useServerJSONStore } from './serverJSONStore'
 import { FileActions } from './actions/file'
+import { FavoriteActions } from './actions/favorite'
 
 class PitcherInstance {
     store
     fileActions = FileActions
+    favoriteActions = FavoriteActions
 
     constructor() {}
 
     async init() {
         await loadServerJSON()
         this.store = useServerJSONStore()
+        this.favoriteActions.getFavorites()
     }
 
     get uiFiles() {
@@ -54,6 +57,18 @@ class PitcherInstance {
 
     sendPickingContent(fileIds, via) {
         this.fileActions.sendPickingContent(fileIds, via)
+    }
+
+    toggleFavorite(file) {
+        if (file.isFavorite) {
+            this.favoriteActions.removeFavorite(file)
+        } else {
+            this.favoriteActions.addFavorite(file)
+        }
+    }
+
+    sendDocuments() {
+        this.fileActions.sendDocuments()
     }
 }
 

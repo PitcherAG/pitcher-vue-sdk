@@ -167,6 +167,10 @@ class Actions {
     sendPickingContent(fileIds, via) {
         fireEvent('sendPickingContent', { fileIDs: fileIds, via: via })
     }
+
+    sendDocuments() {
+        fireEvent('sendDocs')
+    }
 }
 
 const FileActions = new Actions()

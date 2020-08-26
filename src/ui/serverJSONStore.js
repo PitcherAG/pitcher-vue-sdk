@@ -2,6 +2,7 @@ import { fireEvent } from '../event'
 import { waitForWindowProp } from '../utils'
 import { createStore } from '../store'
 import { reactive } from '@vue/composition-api'
+import Vue from 'vue'
 
 const UI_CONSTANTS = {
     IGNORE_CUSTOM_TYPE: 2,
@@ -26,7 +27,8 @@ class ServerJSONStore {
         documentPath: null,
         presentations: [],
         customs: [],
-        category: {}
+        category: {},
+        allowedIDs: []
     })
 
     getInitialCategory() {
@@ -138,6 +140,16 @@ class ServerJSONStore {
         }
         return false
     }
+
+    markFavorites(fileIdMapping) {
+        this.state.files.forEach(file => {
+            if (typeof file.isFavorite === 'undefined') {
+                Vue.set(file, 'isFavorite', fileIdMapping[file.ID] || false)
+            } else {
+                file.isFavorite = fileIdMapping[file.ID] || false
+            }
+        })
+    }
 }
 
 export const useServerJSONStore = () => {
@@ -198,4 +210,16 @@ window.setMainNav = function(mainNavID) {
     store.setMainNav(store.categories && store.categories.find(c => c.ID == mainNavID))
 }
 
-window.filterJSON = function() {}
+window.filterJSON = function(Ids) {
+    if (typeof Ids === 'string') {
+        Ids = JSON.parse(Ids)
+    }
+    window.allowedIDs = Ids
+    const store = useServerJSONStore()
+    store.state.allowedIDs = Ids
+}
+
+window.getAllowedIDs = function() {
+    const store = useServerJSONStore()
+    return store.state.allowedIDs
+}
