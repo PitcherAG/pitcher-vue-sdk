@@ -171,6 +171,10 @@ class Actions {
     sendDocuments() {
         fireEvent('sendDocs')
     }
+
+    launchFileWithKeyword(keyword) {
+        fireEvent('launchFileWithKeyword', { keyword: keyword })
+    }
 }
 
 const FileActions = new Actions()

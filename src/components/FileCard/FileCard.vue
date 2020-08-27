@@ -11,7 +11,7 @@
                 @click="emit('onClickImage')"
             />
             <!-- Favorite -->
-            <div class="file-card__stacked button left" @click="emit('onClickFavorite')">
+            <div v-if="canbeMarkedAsFavorite" class="file-card__stacked button left" @click="emit('onClickFavorite')">
                 <i class="icon large" :class="[{ outline: !isFavorite ? 'outline' : '' }, favoriteIcon]" />
             </div>
             <!-- New -->
@@ -77,6 +77,10 @@ export default defineComponent({
         favoriteIcon: {
             type: String,
             default: 'star'
+        },
+        canbeMarkedAsFavorite: {
+            type: Boolean,
+            default: true
         },
         newIconClass: String,
         imgUrl: String,

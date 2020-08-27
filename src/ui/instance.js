@@ -1,6 +1,7 @@
 import { loadServerJSON, useServerJSONStore } from './serverJSONStore'
 import { FileActions } from './actions/file'
 import { FavoriteActions } from './actions/favorite'
+import { fireEvent } from '../event'
 
 class PitcherInstance {
     store
@@ -69,6 +70,36 @@ class PitcherInstance {
 
     sendDocuments() {
         this.fileActions.sendDocuments()
+    }
+
+    launchFileWithKeyword(keyword) {
+        this.fileActions.launchFileWithKeyword(keyword)
+    }
+
+    getExtraFieldValue(property, defaultValue) {
+        let value = defaultValue
+        try {
+            if (typeof this.store.state.config.extraField === 'string') {
+                this.store.state.config.extraField = JSON.parse(this.store.state.config.extraField)
+            }
+            if (typeof this.store.state.config.extraField[property] !== 'undefined') {
+                value = this.store.state.config.extraField[property]
+                if (typeof value === 'string' && (value.startsWith('{') || value.startsWith('['))) {
+                    value = JSON.parse(value)
+                }
+            }
+        } catch (e) {
+            console.warn('no property')
+        }
+        return value
+    }
+
+    get deviceMetadata() {
+        return this.store.state.metadata
+    }
+
+    launchExternal(url) {
+        fireEvent('launchExternal', { urlV: url })
     }
 }
 

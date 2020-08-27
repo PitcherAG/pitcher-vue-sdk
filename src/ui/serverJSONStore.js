@@ -1,5 +1,5 @@
 import { fireEvent } from '../event'
-import { waitForWindowProp } from '../utils'
+import { waitForWindowProp, joinPath } from '../utils'
 import { createStore } from '../store'
 import { reactive } from '@vue/composition-api'
 import Vue from 'vue'
@@ -171,7 +171,7 @@ export async function loadServerJSON(timeout = 5) {
         const now = new Date().getTime() / 1000
         serverJSON.files.forEach(f => {
             f.shouldShowInUI = store.shouldShowInUI(now, f)
-            f.thumbnailUrl = `${window.documentPath}${f.thumb}`
+            f.thumbnailUrl = joinPath(window.documentPath, f.thumb)
         })
         Object.assign(store.state, window.serverJSON)
         store.state.documentPath = window.documentPath
