@@ -101,6 +101,10 @@ class PitcherInstance {
     launchExternal(url) {
         fireEvent('launchExternal', { urlV: url })
     }
+
+    updateStatusBadge(value) {}
+
+    getCategoryLogoURL() {}
 }
 
 const Instance = new PitcherInstance()

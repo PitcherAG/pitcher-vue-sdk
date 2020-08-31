@@ -132,6 +132,7 @@ class ServerJSONStore {
                         file.ID = '' + parseInt(file.ID)
                     }
                 }
+                file.ID = '' + file.ID
                 file.isCustom ? this.addFileAsCustom(file) : this.mergePresentation(file)
             }
             return true

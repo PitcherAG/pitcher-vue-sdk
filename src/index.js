@@ -30,6 +30,7 @@ export * from './components/export.js'
 //UI Instance
 export * from './ui/serverJSONStore.js'
 export * from './ui/instance.js'
+export * from './ui/actions/functions'
 
 // Mixins
 export { default as ModalMixin } from './semantic/mixins/modal.js'
