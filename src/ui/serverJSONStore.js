@@ -160,6 +160,8 @@ export const useServerJSONStore = () => {
 export async function loadServerJSON(timeout = 5) {
     const store = useServerJSONStore()
 
+    await waitForWindowProp('Ti', 1)
+
     fireEvent('askJSON')
 
     const serverJSON = await waitForWindowProp('serverJSON', timeout)
