@@ -147,7 +147,7 @@ class Actions {
         }
     }
 
-    editFileWithId(file) {
+    editFile(file) {
         if (file) {
             fireEvent('editPresentation', {
                 dataOfPres: file,
@@ -162,6 +162,10 @@ class Actions {
         } else {
             fireEvent('editPresentation', { mix: true, allowMix: true })
         }
+    }
+
+    deleteFile(file) {
+        fireEvent('deletePresentation', { dataOfPres: file })
     }
 
     sendPickingContent(fileIds, via) {

@@ -12,6 +12,7 @@ const UI_CONSTANTS = {
 class ServerJSONStore {
     id = 'serverJSON'
     firstLoad = true
+    askPresentationOneTime = false
     state = reactive({
         files: [],
         slides: null,
@@ -96,6 +97,10 @@ class ServerJSONStore {
         this.state.customs = []
         this.state.presentations = []
         files.forEach(file => this.parseSinglePresentation(file))
+        if (this.askPresentationOneTime) {
+            fireEvent('loadPresentationsFromDB', {})
+            this.askPresentationOneTime = false
+        }
     }
 
     addFileAsCustom(file) {
@@ -104,6 +109,7 @@ class ServerJSONStore {
             const customFile = {}
             Object.assign(customFile, original)
             Object.assign(customFile, file)
+            customFile.body = file.presentationName
             this.state.customs.push(customFile)
         }
     }

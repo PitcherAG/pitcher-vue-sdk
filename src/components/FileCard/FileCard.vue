@@ -11,12 +11,15 @@
                 @click="emit('onClickImage')"
             />
             <!-- Favorite -->
-            <div v-if="canbeMarkedAsFavorite" class="file-card__stacked button left" @click="emit('onClickFavorite')">
+            <div v-if="!hideFavorite" class="file-card__stacked button left" @click="emit('onClickFavorite')">
                 <i class="icon large" :class="[{ outline: !isFavorite ? 'outline' : '' }, favoriteIcon]" />
             </div>
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
-                <div class="ui red mini label" :class="newIconClass">{{ newText }}</div>
+                <template v-if="hasNewSlot">
+                    <slot name="new" :newText="newText" />
+                </template>
+                <div v-else class="ui red mini label">{{ newText }}</div>
             </div>
 
             <!-- Actions -->
@@ -78,11 +81,10 @@ export default defineComponent({
             type: String,
             default: 'star'
         },
-        canbeMarkedAsFavorite: {
+        hideFavorite: {
             type: Boolean,
-            default: true
+            default: false
         },
-        newIconClass: String,
         imgUrl: String,
         date: String,
         keywords: {
@@ -133,6 +135,7 @@ export default defineComponent({
         const state = reactive({
             optionsExpanded: false,
             hasItemsSlot: !!slots.items,
+            hasNewSlot: !!slots.new,
             hasKeywordsSlot: !!slots.keywords
         })
 

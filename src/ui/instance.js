@@ -29,7 +29,8 @@ class PitcherInstance {
     }
 
     createSlideSet() {
-        this.fileActions.editFileWithId()
+        this.store.askPresentationOneTime = true
+        this.fileActions.editFile()
     }
 
     openContent(file) {
@@ -105,6 +106,26 @@ class PitcherInstance {
     updateStatusBadge(value) {}
 
     getCategoryLogoURL() {}
+
+    loadPresentationsFromDB() {
+        fireEvent('loadPresentationsFromDB', {})
+    }
+
+    editCustomFile(file) {
+        this.store.askPresentationOneTime = true
+        this.fileActions.editFile(file)
+    }
+
+    deleteCustomFile(file) {
+        this.store.askPresentationOneTime = true
+        this.fileActions.deleteFile(file)
+    }
+
+    sentPitcherEvent() {}
+
+    async getPitcherCode() {
+        return await fireEvent('getPitcherCode', { source: 'homescreen' })
+    }
 }
 
 const Instance = new PitcherInstance()
