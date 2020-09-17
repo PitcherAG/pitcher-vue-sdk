@@ -15,7 +15,11 @@ class Actions {
     async getFavorites() {
         fireEvent('getFavoriteItems', { source: 'homescreen' }).then(favoriteFileIds => {
             const store = useServerJSONStore()
-            store.markFavorites(Object.assign({}, favoriteFileIds))
+            const map = {}
+            if (favoriteFileIds && favoriteFileIds.length) {
+                favoriteFileIds.forEach(Id => (map[Id] = true))
+            }
+            store.markFavorites(map)
         })
     }
 }
