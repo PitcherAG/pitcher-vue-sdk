@@ -61,6 +61,8 @@ class ServerJSONStore {
             const initialCategory = (!this.firstLoad && this.getLastCategory()) || this.getInitialCategory()
             if (initialCategory) {
                 this.setMainNav(initialCategory)
+            } else {
+                fireEvent('uiReady')
             }
         } else {
             fireEvent('uiReady')
