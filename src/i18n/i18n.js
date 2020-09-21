@@ -1,7 +1,7 @@
 import Component from './component'
 import Directive from './directive'
 import { getTranslationIndex } from './plurals'
-import { renderSimpleContext } from '../utils'
+import { renderSimpleContext, json_fetch } from '../utils'
 import { createStore } from '..'
 
 if (!window.fetch) {
@@ -23,7 +23,7 @@ class I18nStore {
         }
 
         if (load && lang !== 'en') {
-            const response = await fetch(`${dir}/${lang}/${app}.json`)
+            const response = await json_fetch(`${dir}/${lang}/${app}.json`)
             const data = await response.json()
 
             for (const locale in data) {
