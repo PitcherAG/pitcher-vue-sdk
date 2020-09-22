@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "AM"
 
@@ -190,53 +195,3 @@ msgstr "Danas"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "Ne možete dodati objekte ove vrste."
-
-#: src/components/ProgressBar.vue
-#, fuzzy
-msgid "completed"
-msgstr "dovršen"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "No results"
-msgstr "Nema rezultata"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Reset"
-msgstr "Resetirati"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S, M, T, W, T, F, S"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Select all"
-msgstr "Odaberi sve"
-
-#: src/components/DataTable/DataTable.vue
-#, fuzzy
-msgid "Table has not any data to show"
-msgstr "Tablica nema podataka za prikaz"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Download"
-msgstr "preuzimanje datoteka"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "New"
-msgstr "Novi"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Search"
-msgstr "traži"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Share"
-msgstr "Udio"

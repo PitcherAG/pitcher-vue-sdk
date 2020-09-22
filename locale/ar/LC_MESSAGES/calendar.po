@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "\"S\" و \"M\" و \"T\" و \"W\" و \"T\" و \"F\" و \"S\""
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "صباحا"
 
@@ -145,8 +150,3 @@ msgstr "سبتمبر"
 #, fuzzy
 msgid "Today"
 msgstr "اليوم"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S ، M ، T ، W ، T ، F ، S."

@@ -70,18 +70,18 @@
             <!-- Default actions -->
             <div v-else class="a-container mb-4">
                 <a href="#" @click="selectAll">
-                    <span class="ui text" :class="{ [color]: !!color }">{{ $gettext('Select all') }}</span>
+                    <span class="ui text" :class="{ [color]: !!color }">Select all</span>
                 </a>
                 <span class="ui large grey text mx-2">|</span>
                 <a href="#" @click="reset">
-                    <span class="ui text" :class="{ [color]: !!color }">{{ $gettext('Reset') }}</span>
+                    <span class="ui text" :class="{ [color]: !!color }">Reset</span>
                 </a>
             </div>
 
             <!-- Search container -->
             <div v-if="!hideSearch" class="s-container mb-4">
                 <div class="ui fluid icon small input">
-                    <input v-model="searchKey" type="text" :placeholder="$gettext('Search')" />
+                    <input v-model="searchKey" type="text" placeholder="Search" />
                     <i v-if="searchKey" class="times thin icon link" @click="searchKey = ''" />
                 </div>
                 <!-- No data text -->
@@ -173,9 +173,7 @@ export default {
         },
         noDataText: {
             type: String,
-            default: () => {
-                $gettext('No results')
-            }
+            default: 'No results'
         },
         width: {
             type: [String, Number]

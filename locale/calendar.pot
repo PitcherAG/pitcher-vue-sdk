@@ -6,6 +6,10 @@ msgstr ""
 "Project-Id-Version: \n"
 
 #: src/components/Calendar.vue
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr ""
+
+#: src/components/Calendar.vue
 msgid "AM"
 msgstr ""
 
@@ -103,10 +107,6 @@ msgstr ""
 
 #: src/components/Calendar.vue
 msgid "PM"
-msgstr ""
-
-#: src/components/Calendar.vue
-msgid "S,M,T,W,T,F,S"
 msgstr ""
 
 #: src/components/Calendar.vue

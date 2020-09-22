@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "AM"
 
@@ -190,53 +195,3 @@ msgstr "आज"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "आप इस प्रकार का ऑब्जेक्ट नहीं जोड़ सकते हैं।"
-
-#: src/components/ProgressBar.vue
-#, fuzzy
-msgid "completed"
-msgstr "पूरा कर लिया है"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "No results"
-msgstr "कोई परिणाम नहीं"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Reset"
-msgstr "रीसेट"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S, M, टी, डब्ल्यू, टी, एफ, एस"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Select all"
-msgstr "सभी का चयन करे"
-
-#: src/components/DataTable/DataTable.vue
-#, fuzzy
-msgid "Table has not any data to show"
-msgstr "तालिका में दिखाने के लिए कोई डेटा नहीं है"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Download"
-msgstr "डाउनलोड"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "New"
-msgstr "नया"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Search"
-msgstr "खोज"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Share"
-msgstr "शेयर"

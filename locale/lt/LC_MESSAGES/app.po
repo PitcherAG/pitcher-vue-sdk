@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "„S“, „M“, „T“, „W“, „T“, „F“, „S“"
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "ESU"
 
@@ -190,53 +195,3 @@ msgstr "Šiandien"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "Negalite pridėti tokio tipo objekto."
-
-#: src/components/ProgressBar.vue
-#, fuzzy
-msgid "completed"
-msgstr "baigtas"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "No results"
-msgstr "Jokių rezultatų"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Reset"
-msgstr "Atstatyti"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S, M, T, W, T, F, S"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Select all"
-msgstr "Pasirinkti viską"
-
-#: src/components/DataTable/DataTable.vue
-#, fuzzy
-msgid "Table has not any data to show"
-msgstr "Lentelėje nėra duomenų, kuriuos būtų galima parodyti"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Download"
-msgstr "parsisiųsti"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "New"
-msgstr "Nauja"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Search"
-msgstr "Paieška"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Share"
-msgstr "Dalintis"

@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "„S”, „M”, „T”, „W”, „T”, „F”, „S”"
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "AM"
 
@@ -190,53 +195,3 @@ msgstr "Ma"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "Nem adhat hozzá ilyen típusú objektumot."
-
-#: src/components/ProgressBar.vue
-#, fuzzy
-msgid "completed"
-msgstr "elkészült"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "No results"
-msgstr "Nincs eredmény"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Reset"
-msgstr "Visszaállítás"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S, M, T, W, T, F, S"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Select all"
-msgstr "Mindet kiválaszt"
-
-#: src/components/DataTable/DataTable.vue
-#, fuzzy
-msgid "Table has not any data to show"
-msgstr "A táblázatnak nincsenek megjelenítendő adatai"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Download"
-msgstr "Letöltés"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "New"
-msgstr "Új"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Search"
-msgstr "Keresés"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Share"
-msgstr "Ossza meg"

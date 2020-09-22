@@ -6,6 +6,10 @@ msgstr ""
 "Project-Id-Version: \n"
 
 #: src/components/Calendar.vue
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr ""
+
+#: src/components/Calendar.vue
 msgid "AM"
 msgstr ""
 
@@ -25,10 +29,6 @@ msgstr ""
 msgid "August"
 msgstr ""
 
-#: src/components/ProgressBar.vue
-msgid "completed"
-msgstr ""
-
 #: src/components/ObjectFormField.vue
 msgid "Date"
 msgstr ""
@@ -44,10 +44,6 @@ msgstr ""
 
 #: src/components/Calendar.vue
 msgid "December"
-msgstr ""
-
-#: src/components/FileCard/FileCard.vue
-msgid "Download"
 msgstr ""
 
 #: src/components/Calendar.vue
@@ -94,14 +90,6 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: src/components/FileCard/FileCard.vue
-msgid "New"
-msgstr ""
-
-#: src/components/FilterDropdown.vue
-msgid "No results"
-msgstr ""
-
 #: src/components/Calendar.vue
 msgid "Nov"
 msgstr ""
@@ -126,29 +114,12 @@ msgstr ""
 msgid "PM"
 msgstr ""
 
-#: src/components/FilterDropdown.vue
-msgid "Reset"
-msgstr ""
-
-#: src/components/Calendar.vue
-msgid "S,M,T,W,T,F,S"
-msgstr ""
-
 #: src/components/ObjectForm.vue
 msgid "Save"
 msgstr ""
 
-#: src/components/FilterDropdown.vue
-msgid "Search"
-msgstr ""
-
-#: src/components/Dropdown.vue
 #: src/components/ObjectFormField.vue
 msgid "Select"
-msgstr ""
-
-#: src/components/FilterDropdown.vue
-msgid "Select all"
 msgstr ""
 
 #: src/components/ObjectForm.vue
@@ -161,14 +132,6 @@ msgstr ""
 
 #: src/components/Calendar.vue
 msgid "September"
-msgstr ""
-
-#: src/components/FileCard/FileCard.vue
-msgid "Share"
-msgstr ""
-
-#: src/components/DataTable/DataTable.vue
-msgid "Table has not any data to show"
 msgstr ""
 
 #: src/components/ObjectForm.vue

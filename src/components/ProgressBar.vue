@@ -16,7 +16,7 @@
                 <slot name="label" :percent="percent" :value="value" :total="total" />
             </template>
             <!-- default label -->
-            <template v-else>{{ percent }}% {{ $gettext('completed') }}</template>
+            <template v-else>{{ percent }}% completed</template>
         </div>
     </div>
 </template>

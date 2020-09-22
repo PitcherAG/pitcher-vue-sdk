@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "\"S\", \"M\", \"T\", \"W\", \"T\", \"F\", \"S\""
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "ΕΙΜΑΙ"
 
@@ -190,53 +195,3 @@ msgstr "Σήμερα"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "Δεν μπορείτε να προσθέσετε ένα αντικείμενο αυτού του τύπου."
-
-#: src/components/ProgressBar.vue
-#, fuzzy
-msgid "completed"
-msgstr "ολοκληρώθηκε το"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "No results"
-msgstr "Χωρίς αποτέλεσμα"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Reset"
-msgstr "Επαναφορά"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S, M, T, W, T, F, S"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Select all"
-msgstr "Επιλογή όλων"
-
-#: src/components/DataTable/DataTable.vue
-#, fuzzy
-msgid "Table has not any data to show"
-msgstr "Ο πίνακας δεν έχει δεδομένα για εμφάνιση"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Download"
-msgstr "Κατεβάστε"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "New"
-msgstr "Νέος"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Search"
-msgstr "Αναζήτηση"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Share"
-msgstr "Μερίδιο"

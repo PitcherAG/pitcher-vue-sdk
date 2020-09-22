@@ -236,9 +236,7 @@ export default defineComponent({
         },
         noDataText: {
             type: String,
-            default: () => {
-                $gettext('Table has not any data to show')
-            }
+            default: 'Table has not any data to show'
         },
         noHeader: {
             type: Boolean,

@@ -8,6 +8,11 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "\"S\" و \"M\" و \"T\" و \"W\" و \"T\" و \"F\" و \"S\""
+
+#: src/components/Calendar.vue
+#, fuzzy
 msgid "AM"
 msgstr "صباحا"
 
@@ -190,53 +195,3 @@ msgstr "اليوم"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "لا يمكنك إضافة كائن من هذا النوع."
-
-#: src/components/ProgressBar.vue
-#, fuzzy
-msgid "completed"
-msgstr "منجز"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "No results"
-msgstr "لا نتائج"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Reset"
-msgstr "إعادة تعيين"
-
-#: src/components/Calendar.vue
-#, fuzzy
-msgid "S,M,T,W,T,F,S"
-msgstr "S ، M ، T ، W ، T ، F ، S."
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Select all"
-msgstr "اختر الكل"
-
-#: src/components/DataTable/DataTable.vue
-#, fuzzy
-msgid "Table has not any data to show"
-msgstr "الجدول ليس لديه أي بيانات لإظهارها"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Download"
-msgstr "تحميل"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "New"
-msgstr "جديد"
-
-#: src/components/FilterDropdown.vue
-#, fuzzy
-msgid "Search"
-msgstr "بحث"
-
-#: src/components/FileCard/FileCard.vue
-#, fuzzy
-msgid "Share"
-msgstr "شارك"

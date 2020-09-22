@@ -99,21 +99,15 @@ export default defineComponent({
         },
         downloadText: {
             type: String,
-            default: () => {
-                $gettext('Download')
-            }
+            default: 'Download'
         },
         shareText: {
             type: String,
-            default: () => {
-                $gettext('Share')
-            }
+            default: 'Share'
         },
         newText: {
             type: String,
-            default: () => {
-                $gettext('New')
-            }
+            default: 'New'
         },
         height: {
             type: [String, Number],
