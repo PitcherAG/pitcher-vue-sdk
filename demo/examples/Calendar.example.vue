@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="pl-4">
-                <Calendar />
+                <Calendar v-model="stringDate" v-bind="attrs" />
             </div>
         </div>
     </div>
@@ -49,6 +49,14 @@ export default defineComponent({
                 //     message:'test event',
                 // }],
                 minDate: '2020-08-07T11:20:00.000'
+            },
+            // stringDate: new Date(),
+            // stringDate: '2020-08-07T11:20:00.000',
+            stringDate: '2020-08-05T11:20:00.000+0000',
+            // stringDate: '',
+            attrs: {
+                minDate: '2020-08-07T11:20:00.000',
+                disableValueFormatting: false
             }
         })
 

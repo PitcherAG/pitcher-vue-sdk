@@ -1,45 +1,35 @@
 <template>
     <div class="pitcher-calendar">
+        <DatePicker v-bind="calendarAttr" @input="onChange">
+            <template #default="{ inputValue }">
+                <div class="ui input left icon" v-bind="inputAttr">
+                    <i class="calendar icon" />
+                    <input type="text" :value="inputValue" :placeholder="defaultText" />
+                </div>
+            </template>
+        </DatePicker>
     </div>
 </template>
 <script>
-import { ref, computed } from '@vue/composition-api'
+import { computed } from '@vue/composition-api'
+import DatePicker from 'v-calendar/lib/components/date-picker.umd'
 import { parsePxStyle, validateSize } from './mixins'
 import { formatDate } from '../i18n/date.js'
 
 export default {
     components: {
+        DatePicker
     },
     props: {
         value: {
             type: [String, Date],
             required: false
         },
-        type: {
-            default: 'date',
-            validator: value => {
-                return ['dateTime', 'date', 'time', 'month', 'year'].indexOf(value) !== -1
-            }
-        },
         minDate: [String, Date],
         maxDate: [String, Date],
-        startMode: {
-            default: 'day',
-            validator: value => {
-                return ['year', 'month', 'day', 'hour', 'minute'].indexOf(value) !== -1
-            }
-        },
         defaultText: {
             type: String,
-            default: 'Date/Time'
-        },
-        showToday: {
-            type: Boolean,
-            default: true
-        },
-        showWeekNumbers: {
-            type: Boolean,
-            default: false
+            default: () => $gettext('Date/Time')
         },
         disabledDaysOfWeek: Array,
         disabledDates: Array,
@@ -58,12 +48,6 @@ export default {
             required: false,
             // must be function instead of array function to be able to reach component instance
             default: function(date) {
-                // if date time
-                // eslint-disable-next-line vue/no-deprecated-props-default-this
-                if (this.type.includes('time')) {
-                    return date.toISOString()
-                }
-
                 // if date format
                 const yyyy = date.getFullYear().toString()
                 const mm = (date.getMonth() + 1).toString()
@@ -80,7 +64,6 @@ export default {
             required: false,
             default: date => formatDate(date)
         },
-        setting: Object,
         action: {
             type: String,
             default: 'activate'
@@ -107,8 +90,6 @@ export default {
     emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
 
     setup(props, { emit }) {
-        const placeholder = ref()
-
         const inputAttr = computed(() => ({
             class: {
                 fluid: props.fluid,
@@ -123,12 +104,22 @@ export default {
             }
         }))
 
-        const newAttr = computed(() => ({
-            test: ''
+        const calendarAttr = computed(() => ({
+            value: parseDate(props.value),
+            minDate: props.minDate ? parseDate(props.minDate) : undefined,
+            maxDate: props.maxDate ? parseDate(props.maxDate) : undefined,
+            popover: {
+                visibility: 'focus',
+                keepVisibleOnInput: true
+            },
+            color: props.color ? props.color : undefined
         }))
 
         const onChange = date => {
             let result = date
+            console.log('ON_CHANGE', date)
+
+            if (!result) return ''
 
             // if formatting disabled, emit raw value
             if (props.disableValueFormatting) {
@@ -138,26 +129,20 @@ export default {
 
             // format
             result = props.valueFormatter(result)
-            console.log('hop', result)
+            console.log('value change:', result)
             emit('input', result)
         }
 
         const parseDate = dateString => {
-            if (!dateString) return undefined
-
-            // eslint-disable-next-line valid-typeof
-            if (typeof dateString === 'Date') {
+            if (dateString === '') {
                 return dateString
             }
 
-            const regex = /\+\d{4}/g
-            let date = dateString
-
-            if (date.match(regex)) {
-                date = date.replace(regex, '')
+            if (new Date(dateString).toString() !== 'Invalid Date') {
+                return new Date(dateString)
             }
 
-            return new Date(date)
+            console.error(`[ERROR]: Calendar value is not valid! value: ${dateString} type: ${typeof dateString}`)
         }
 
         const initCalendar = () => {
@@ -166,7 +151,6 @@ export default {
                 minDate: parseDate(props.minDate),
                 maxDate: parseDate(props.maxDate),
                 initialDate: props.value,
-                startMode: props.startMode,
                 today: props.showToday,
                 ampm: props.showAmPm,
                 showWeekNumbers: props.showWeekNumbers,
@@ -178,8 +162,6 @@ export default {
                 disableYear: props.disableYear,
                 disableMonth: props.disableMonth,
                 disableMinute: props.disableMinute,
-                touchReadonly: true,
-                action: props.action,
                 text: {
                     days: $gettext('S,M,T,W,T,F,S').split(','),
                     months: [
@@ -215,19 +197,6 @@ export default {
                     am: $gettext('AM'),
                     pm: $gettext('PM')
                 },
-                onChange: date => {
-                    let result = date
-
-                    // if formatting disabled, emit raw value
-                    if (props.disableValueFormatting) {
-                        emit('input', result)
-                        return
-                    }
-
-                    // format
-                    result = props.valueFormatter(result)
-                    emit('input', result)
-                },
                 formatter: {
                     date: internalDate => {
                         const date = props.value
@@ -236,27 +205,19 @@ export default {
 
                         return props.inputFormatter(date)
                     }
-                },
-                onBeforeChange: () => emit('onBeforeChange'),
-                onShow: () => emit('onShow'),
-                onVisible: () => emit('onVisible'),
-                onHide: () => emit('onHide'),
-                onHidden: () => emit('onHidden'),
-                onSelect: () => emit('onSelect'),
-                // merge with settings
-                ...props.setting
+                }
             }
 
-            if (props.defaultText === 'Date/Time') {
-                placeholder.value = $gettext('Date/Time')
-            } else {
-                placeholder.value = props.defaultText
-            }
+            // if (props.defaultText === 'Date/Time') {
+            //     placeholder.value = $gettext('Date/Time')
+            // } else {
+            //     placeholder.value = props.defaultText
+            // }
 
             // $(refs.calendar).calendar(settings)
         }
 
-        return { inputAttr, newAttr, onChange, placeholder }
+        return { inputAttr, calendarAttr, onChange }
     }
 }
 </script>
