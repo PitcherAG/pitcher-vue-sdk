@@ -55,8 +55,9 @@ export default defineComponent({
             stringDate: '2020-08-05T11:20:00.000+0000',
             // stringDate: '',
             attrs: {
-                minDate: '2020-08-07T11:20:00.000',
-                disableValueFormatting: false
+                // minDate: '2020-08-07T11:20:00.000',
+                disableValueFormatting: false,
+                disableInputFormatting: false,
             }
         })
 

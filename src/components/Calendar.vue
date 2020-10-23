@@ -1,12 +1,10 @@
 <template>
     <div class="pitcher-calendar">
         <DatePicker v-bind="calendarAttr" @input="onChange">
-            <template #default="{ inputValue }">
-                <div class="ui input left icon" v-bind="inputAttr">
-                    <i class="calendar icon" />
-                    <input type="text" :value="inputValue" :placeholder="defaultText" />
-                </div>
-            </template>
+            <div class="ui input left icon" v-bind="inputAttr">
+                <i class="calendar icon" />
+                <input type="text" :value="valueToShow" :placeholder="defaultText" @keydown.prevent />
+            </div>
         </DatePicker>
     </div>
 </template>
@@ -31,14 +29,12 @@ export default {
             type: String,
             default: () => $gettext('Date/Time')
         },
-        disabledDaysOfWeek: Array,
+        firstDayOfWeek: {
+            type: Number,
+            default: 2
+        },
         disabledDates: Array,
-        enabledDates: Array,
-        eventDates: Array,
-        eventClass: String,
-        disableYear: Boolean,
-        disableMonth: Boolean,
-        disableMinute: Boolean,
+        availableDates: Array,
         disableValueFormatting: {
             type: Boolean,
             default: false
@@ -64,10 +60,6 @@ export default {
             required: false,
             default: date => formatDate(date)
         },
-        action: {
-            type: String,
-            default: 'activate'
-        },
         fluid: Boolean,
         disabled: Boolean,
         loading: {
@@ -85,6 +77,16 @@ export default {
         size: {
             type: String,
             validator: val => validateSize(val, 'Calendar.vue')
+        },
+        color: {
+            type: String,
+            validator: value => {
+                return (
+                    ['blue', 'gray', 'red', 'orange', 'yellow', 'green', 'teal', 'indigo', 'purple', 'pink'].indexOf(
+                        value
+                    ) !== -1
+                )
+            }
         }
     },
     emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
@@ -108,25 +110,37 @@ export default {
             value: parseDate(props.value),
             minDate: props.minDate ? parseDate(props.minDate) : undefined,
             maxDate: props.maxDate ? parseDate(props.maxDate) : undefined,
+            firstDayOfWeek: props.firstDayOfWeek,
+            disabledDates: props.disabledDates ? props.disabledDates : undefined,
+            availableDates: props.availableDates ? props.availableDates : undefined,
             popover: {
                 visibility: 'focus',
                 keepVisibleOnInput: true
             },
-            color: props.color ? props.color : undefined
+            color: props.color ? props.color : undefined,
+            theme: {
+                navPopoverContainer: {
+                    light: 'vc-rounded text-style--dark vc-bg-white vc-shadow'
+                }
+            }
         }))
 
+        const valueToShow = computed(() => {
+            if (props.disableInputFormatting) {
+                return props.value
+            }
+            return props.inputFormatter(props.value)
+        })
+
         const onChange = date => {
+            if (!date) return
+
             let result = date
-            console.log('ON_CHANGE', date)
-
-            if (!result) return ''
-
             // if formatting disabled, emit raw value
             if (props.disableValueFormatting) {
                 emit('input', result)
                 return
             }
-
             // format
             result = props.valueFormatter(result)
             console.log('value change:', result)
@@ -145,79 +159,7 @@ export default {
             console.error(`[ERROR]: Calendar value is not valid! value: ${dateString} type: ${typeof dateString}`)
         }
 
-        const initCalendar = () => {
-            const settings = {
-                type: props.type,
-                minDate: parseDate(props.minDate),
-                maxDate: parseDate(props.maxDate),
-                initialDate: props.value,
-                today: props.showToday,
-                ampm: props.showAmPm,
-                showWeekNumbers: props.showWeekNumbers,
-                disabledDaysOfWeek: props.disabledDaysOfWeek,
-                disabledDates: props.disabledDates,
-                enabledDates: props.enabledDates,
-                eventDates: props.eventDates,
-                eventClass: props.eventClass,
-                disableYear: props.disableYear,
-                disableMonth: props.disableMonth,
-                disableMinute: props.disableMinute,
-                text: {
-                    days: $gettext('S,M,T,W,T,F,S').split(','),
-                    months: [
-                        $gettext('January'),
-                        $gettext('February'),
-                        $gettext('March'),
-                        $gettext('April'),
-                        $gettext('May'),
-                        $gettext('June'),
-                        $gettext('July'),
-                        $gettext('August'),
-                        $gettext('September'),
-                        $gettext('October'),
-                        $gettext('November'),
-                        $gettext('December')
-                    ],
-                    monthsShort: [
-                        $gettext('Jan'),
-                        $gettext('Feb'),
-                        $gettext('Mar'),
-                        $gettext('Apr'),
-                        $gettext('May'),
-                        $gettext('Jun'),
-                        $gettext('Jul'),
-                        $gettext('Aug'),
-                        $gettext('Sep'),
-                        $gettext('Oct'),
-                        $gettext('Nov'),
-                        $gettext('Dec')
-                    ],
-                    today: $gettext('Today'),
-                    now: $gettext('Now'),
-                    am: $gettext('AM'),
-                    pm: $gettext('PM')
-                },
-                formatter: {
-                    date: internalDate => {
-                        const date = props.value
-                        if (!internalDate) return ''
-                        if (props.disableInputFormatting) return date
-
-                        return props.inputFormatter(date)
-                    }
-                }
-            }
-
-            // if (props.defaultText === 'Date/Time') {
-            //     placeholder.value = $gettext('Date/Time')
-            // } else {
-            //     placeholder.value = props.defaultText
-            // }
-
-            // $(refs.calendar).calendar(settings)
-        }
-
-        return { inputAttr, calendarAttr, onChange }
+        return { valueToShow, inputAttr, calendarAttr, onChange }
     }
 }
 </script>
@@ -226,6 +168,19 @@ export default {
 .pitcher-calendar {
     input:hover {
         cursor: pointer;
+    }
+
+    ::v-deep {
+        .vc-bg-blue-600 {
+            background-color: #2185d0 !important;
+        }
+        .vc-text-blue-100 {
+            color: #1a202c;
+
+            &:hover {
+                color: #fff;
+            }
+        }
     }
 }
 </style>
