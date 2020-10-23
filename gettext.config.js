@@ -48,7 +48,7 @@ module.exports = {
     },
     translations: [
         { category: 'app', type: 'source', patterns: ['src/**/!(*-cli).js', 'src/**/*.vue', 'src/**/*.html'] },
-        { category: 'calendar', type: 'source', patterns: ['src/components/Calendar.vue'] },
+        { category: 'calendar', type: 'source', patterns: ['src/components/OldCalendar.vue'] },
         {
             category: 'object-form',
             type: 'source',

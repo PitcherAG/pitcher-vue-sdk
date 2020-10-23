@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import CompositionApi from '@vue/composition-api'
-import Calendar from '@/components/Calendar'
+import OldCalendar from '@/components/OldCalendar'
 import { TranslationPlugin } from '@/'
 
 const localVue = createLocalVue()
@@ -10,8 +10,8 @@ localVue.use(TranslationPlugin)
 const dateValue = '2002-01-15T12:00:00.000+0000'
 const minDate = '2002-01-17T12:00:00.000+0000'
 
-describe('Calendar.vue', () => {
-    const wrapper = shallowMount(Calendar, {
+describe('OldCalendar.vue', () => {
+    const wrapper = shallowMount(OldCalendar, {
         localVue,
         propsData: {
             value: '',

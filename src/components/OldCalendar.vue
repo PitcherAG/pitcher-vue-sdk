@@ -1,24 +1,26 @@
 <template>
-    <div class="pitcher-calendar">
+    <div ref="calendar" class="ui calendar pitcher-calendar">
+        <div class="ui input left icon" v-bind="inputAttr">
+            <i class="calendar icon" />
+            <input ref="input" type="text" :placeholder="placeholder" />
+        </div>
     </div>
 </template>
 <script>
-import { ref, computed } from '@vue/composition-api'
+import { onMounted, ref, computed, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 import { formatDate } from '../i18n/date.js'
 
 export default {
-    components: {
-    },
     props: {
         value: {
             type: [String, Date],
-            required: false
+            required: true
         },
         type: {
-            default: 'date',
+            default: 'datetime',
             validator: value => {
-                return ['dateTime', 'date', 'time', 'month', 'year'].indexOf(value) !== -1
+                return ['datetime', 'date', 'time', 'month', 'year'].indexOf(value) !== -1
             }
         },
         minDate: [String, Date],
@@ -32,6 +34,10 @@ export default {
         defaultText: {
             type: String,
             default: 'Date/Time'
+        },
+        showAmPm: {
+            type: Boolean,
+            default: false
         },
         showToday: {
             type: Boolean,
@@ -59,7 +65,6 @@ export default {
             // must be function instead of array function to be able to reach component instance
             default: function(date) {
                 // if date time
-                // eslint-disable-next-line vue/no-deprecated-props-default-this
                 if (this.type.includes('time')) {
                     return date.toISOString()
                 }
@@ -106,7 +111,7 @@ export default {
     },
     emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
 
-    setup(props, { emit }) {
+    setup(props, { emit, refs, root }) {
         const placeholder = ref()
 
         const inputAttr = computed(() => ({
@@ -123,29 +128,9 @@ export default {
             }
         }))
 
-        const newAttr = computed(() => ({
-            test: ''
-        }))
-
-        const onChange = date => {
-            let result = date
-
-            // if formatting disabled, emit raw value
-            if (props.disableValueFormatting) {
-                emit('input', result)
-                return
-            }
-
-            // format
-            result = props.valueFormatter(result)
-            console.log('hop', result)
-            emit('input', result)
-        }
-
         const parseDate = dateString => {
             if (!dateString) return undefined
 
-            // eslint-disable-next-line valid-typeof
             if (typeof dateString === 'Date') {
                 return dateString
             }
@@ -253,10 +238,50 @@ export default {
                 placeholder.value = props.defaultText
             }
 
-            // $(refs.calendar).calendar(settings)
+            $(refs.calendar).calendar(settings)
         }
 
-        return { inputAttr, newAttr, onChange, placeholder }
+        onMounted(() => {
+            root.$nextTick(() => {
+                initCalendar()
+            })
+        })
+
+        // props watch list for re-initializing calendar
+        const watchList = [
+            () => props.value,
+            () => props.minDate,
+            () => props.maxDate,
+            () => props.type,
+            () => props.startMode,
+            () => props.defaultText,
+            () => props.showAmPm,
+            () => props.showToday,
+            () => props.showWeekNumbers,
+            () => props.disabledDaysOfWeek,
+            () => props.disabledDates,
+            () => props.enabledDates,
+            () => props.eventDates,
+            () => props.eventClass,
+            () => props.disableYear,
+            () => props.disableMonth,
+            () => props.disableMinute,
+            () => props.action,
+            () => props.settings,
+            () => props.disableValueFormatting,
+            () => props.valueFormatter,
+            () => props.disableInputFormatting,
+            () => props.inputFormatter
+        ]
+
+        watch(
+            watchList,
+            () => {
+                initCalendar()
+            },
+            { immediate: true }
+        )
+        return { inputAttr, initCalendar, placeholder }
     }
 }
 </script>

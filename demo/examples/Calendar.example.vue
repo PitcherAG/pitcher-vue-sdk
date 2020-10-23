@@ -2,35 +2,44 @@
     <div class="pt-4 fill-height">
         <h3>Calendar</h3>
         <div class="ui divider" />
-        <div class="mb-4">Date value: {{ stringDate }}</div>
-        <div class="mb-4">minDate: {{ attrs.minDate }}</div>
-        <Calendar v-model="stringDate" v-bind="attrs" @input="val => log('input', val)" />
-        <br />
-        <div class="ui button" @click="setDate">
-            Update value
-        </div>
-        <div class="ui button" @click="setMinDate">
-            Set minDate
-        </div>
-        <div class="ui button" @click="toggleToday">
-            Toggle today
+        <div class="d-flex">
+            <div class="pr-15" style="border-right: 1px solid #ccc">
+                <div class="mb-4">Date value: {{ oldStringDate }}</div>
+                <div class="mb-4">minDate: {{ oldAttrs.minDate }}</div>
+                <OldCalendar v-model="oldStringDate" v-bind="oldAttrs" @input="val => log('input', val)" />
+                <br />
+                <div class="ui button" @click="setDate">
+                    Update value
+                </div>
+                <div class="ui button" @click="setMinDate">
+                    Set minDate
+                </div>
+                <div class="ui button" @click="toggleToday">
+                    Toggle today
+                </div>
+            </div>
+            <div class="pl-4">
+                <Calendar />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import { defineComponent, reactive, toRefs } from '@vue/composition-api'
+import OldCalendar from '@/components/OldCalendar.vue'
 import Calendar from '@/components/Calendar.vue'
 
 export default defineComponent({
     components: {
-        Calendar
+        Calendar,
+        OldCalendar
     },
     setup() {
         const state = reactive({
-            // stringDate: '',
-            stringDate: '2020-08-05T11:20:00.000+0000',
-            attrs: {
+            // oldStringDate: '',
+            oldStringDate: '2020-08-05T11:20:00.000+0000',
+            oldAttrs: {
                 type: 'date',
                 showToday: true,
                 // disabledDaysOfWeek: [0, 3],
@@ -47,21 +56,21 @@ export default defineComponent({
             const newDate = '2020-06-12T11:20:00.000+0000'
             console.log('----------------------------------------')
             console.log('SET DATE')
-            console.log(state.stringDate)
-            state.stringDate = newDate
-            console.log(state.stringDate)
+            console.log(state.oldStringDate)
+            state.oldStringDate = newDate
+            console.log(state.oldStringDate)
         }
 
         const setMinDate = () => {
             const newDate = '2020-08-02T11:20:00.000'
             console.log('----------------------------------------')
             console.log('SET MINDATE', newDate)
-            state.attrs.minDate = newDate
+            state.oldAttrs.minDate = newDate
         }
 
         const toggleToday = () => {
             console.log('HIDE TODAY')
-            state.attrs.showToday = !state.attrs.showToday
+            state.oldAttrs.showToday = !state.oldAttrs.showToday
         }
 
         const log = (type, val) => {

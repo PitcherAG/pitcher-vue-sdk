@@ -1,7 +1,7 @@
 /* Here you have to export all the components you have created */
 
 // Vue Components
-export { default as Calendar } from './Calendar.vue'
+export { default as OldCalendar } from './OldCalendar.vue'
 export { default as Checkbox } from './Checkbox.vue'
 export { default as DataTable } from './DataTable/DataTable.vue'
 export { default as Dropdown } from './Dropdown.vue'

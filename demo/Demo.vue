@@ -32,7 +32,7 @@ export default {
         ProgressBarEx
     },
     setup() {
-        const selectedPage = ref('ModalEx')
+        const selectedPage = ref('CalendarEx')
         const pages = ref([
             {
                 text: 'Modal',
