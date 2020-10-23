@@ -264,7 +264,7 @@ export default {
                             for (const field of state.schema.fields) {
                                 if (field.name === field_name.trim()) {
                                     const f = new Field(field, props.objectType, false)
-                                    if (props.customSettings.includes[f.name]) {
+                                    if (props.customSettings && props.customSettings.includes[f.name]) {
                                         f.settings = props.customSettings[f.name]
                                     }
                                     if (fieldShouldBeReadOnly(f)) {

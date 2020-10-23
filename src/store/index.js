@@ -83,7 +83,7 @@ export function transform(obj) {
             }
         }
     })
-    stores[obj.id] = result
+    return result
 }
 
 export function createStore(obj) {
@@ -94,7 +94,7 @@ export function createStore(obj) {
         return stores[obj.id]
     }
 
-    transform(obj)
+    stores[obj.id] = transform(obj)
 
     if (stores[obj.id]) {
         return stores[obj.id]
