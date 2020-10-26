@@ -159,8 +159,15 @@ export default {
                 return dateString
             }
 
-            if (new Date(dateString).toString() !== 'Invalid Date') {
-                return new Date(dateString)
+            const regex = /\+\d{4}/g
+            let date = dateString
+
+            if (date.match(regex)) {
+                date = date.replace(regex, '')
+            }
+
+            if (new Date(date).toString() !== 'Invalid Date') {
+                return new Date(date)
             }
 
             console.error(`[ERROR]: Calendar value is not valid! value: ${dateString} type: ${typeof dateString}`)
