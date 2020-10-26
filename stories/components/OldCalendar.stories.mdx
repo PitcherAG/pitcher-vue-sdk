@@ -1,6 +1,6 @@
 import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
-import Calendar from '@/components/Calendar'
+import OldCalendar from '@/components/OldCalendar'
 
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
@@ -123,15 +123,15 @@ export const Template = (args, { argTypes }) => {
                 default: false
             }
         },
-        components: { Calendar },
-        template: '<Calendar v-bind="$props" />'
+        components: { OldCalendar },
+        template: '<OldCalendar v-bind="$props" />'
     }
 } 
 
 <!-- Define story settings here -->
 <Meta 
-    title="Components/Calendar"
-    component={Calendar}
+    title="Components/OldCalendar"
+    component={OldCalendar}
     argTypes={argTypes}
     args={args}
 />
@@ -191,7 +191,7 @@ inputFormatter: date => formatDate(date)
 
 ### Usage
 ```javascript
-import { Calendar } from '@pitcher/vue-sdk'
+import { OldCalendar } from '@pitcher/vue-sdk'
 
 // must be reactive
 const selectedDate = '2020-08-01T11:00:00.000'
@@ -219,14 +219,14 @@ const disabledDates = [
 
 ```html
 <!-- Simple usage -->
-<Calendar v-model="selectedDate" />
+<OldCalendar v-model="selectedDate" />
 
 <!-- Using fluid, fixed input width, smaller input size -->
-<Calendar v-model="selectedDate" fluid size="small" max-width="300px" />
+<OldCalendar v-model="selectedDate" fluid size="small" max-width="300px" />
  
 <!-- Using with event dates -->
-<Calendar v-model="selectedDate" :event-dates="eventDates" />
+<OldCalendar v-model="selectedDate" :event-dates="eventDates" />
 
 <!-- Using with disabled dates -->
-<Calendar v-model="selectedDate" :disabled-dates="disabledDates" />
+<OldCalendar v-model="selectedDate" :disabled-dates="disabledDates" />
 ```
