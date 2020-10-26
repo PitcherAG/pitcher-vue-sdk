@@ -103,7 +103,7 @@ export default {
             }
         }
     },
-    emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
+    emits: ['input'],
 
     setup(props, { emit }) {
         const inputAttr = computed(() => ({
