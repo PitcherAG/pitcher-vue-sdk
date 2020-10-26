@@ -20,53 +20,29 @@ export const argTypes = {
                 disable: true
             },
         },
-        type: {
-            description: 'type of calendar'
-        },
         minDate: {
             description: 'minimum date that can be selected in calendar'
         },
         maxDate: {
             description: 'maximum date that can be selected in calendar'
         },
-        startMode: {
-            description: 'calendar mode'
-        },
         defaultText: {
             description: 'default text when there is not any value selected'
         },
-        showAmPm: {
-            description: 'show calendar hours with am/pm format, default is 24H format.'
+        locale: {
+          description: 'the locale identifier or locale configuration to use for displaying the calendar. Resolved by defaults or detected locale if not completely specified'
         },
-        showToday: {
-            description: 'show/hide today button in calendar popup'
-        },
-        showWeekNumbers: {
-            description: 'show/hide week numbers in calendar popup'
-        },
-        disabledDaysOfWeek: {
-            description: 'disable some days of the week from selection (0= Sunday, 1=Monday, ...)'
+        firstDayOfWeek: {
+            description: 'default first day of week. 2 = monday.'
         },
         disabledDates: {
-            description: 'an array of Date-Objects or Objects with given message to show in a popup when hovering over the appropriate date. ex: `{ date: Date, message: String }`'
+            description: 'date that can be one of a Javascript date object, a date range object with start, end, span or pattern tokens ex: `[{ weekdays: [2, 3, 7] }, [new Date()]]` see: https://vcalendar.io/api/v1.0/calendar.html#disabled-dates'
         },
-        enabledDates: {
-            description: 'an array of Date-Objects to be enabled for selection. All other dates are disabled'
+        availableDates: {
+            description: 'date that can be one of a Javascript date object, a date range object with start, end, span or pattern tokens'
         },
-        eventDates: {
-            description: 'an array of Date-Objects or Objects with given message to show in a popup when hovering over the appropriate date and an individual class for the cell. ex: `{ date: Date, message: string, class: string }`'
-        },
-        eventClass: {
-            description: 'default class to be added to each cell of an eventDate date element when no specific class is given to the eventDate element'
-        },
-        disableYear: {
-            description: 'disable year selection mode'
-        },
-        disableMonth: {
-            description: 'disable year selection mode'
-        },
-        disableMinute: {
-            description: 'disable minute selection mode'
+        popover: {
+            description: 'default settings for popover. see: https://vcalendar.io/api/v1.0/datepicker.html#popover'
         },
         disableValueFormatting: {
             description: 'calendar component formats selected value when user selects a date/time. To disable this feature you can use this property'
@@ -79,12 +55,6 @@ export const argTypes = {
         },
         inputFormatter: {
             description: 'formatter function to format value before it is shown in input. See definitions to see how it works'
-        },
-        setting: {
-            description: 'Fomantic calendar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/calendar.html#/settings'
-        },
-        action: {
-            description: 'default action when initializing fomantic calendar element. Default is activate.'
         },
         fluid: {
             description: 'makes the component width fluid 100% by adding fluid class to the input'
@@ -137,7 +107,7 @@ export const Template = (args, { argTypes }) => {
 />
 
 # Calendar
-Fomantic Calendar
+Calendar built with V-Calendar
 
 <Story name="Default">
     {Template.bind({})}
@@ -161,23 +131,11 @@ Fomantic Calendar
 | event | description |
 | :--- | :--- |
 | `@input` | default v-model input event
-| `@onBeforeChange` | fired before the input is changed
-| `@onShow` | fired before calendar popup is shown
-| `@onVisible` | fired when calendar popup is visible
-| `@onHide` | fired before calendar popup is hidden
-| `@onHidden` | fired when calendar popup is hidden
-| `@onSelect` | fired when user clicks on a date/time from popup
 
 ### Definitions
 ```javascript
 // default value formatter before emitted to parent
 valueFormatter: function(date) {
-    // if date includes time, returns formats value as ISO
-    if (this.type.includes('time')) {
-        return date.toISOString()
-    }
-
-    // otherwise formats as date time
     const yyyy = date.getFullYear().toString()
     const mm = (date.getMonth() + 1).toString()
     const dd = date.getDate().toString()
@@ -196,25 +154,8 @@ import { Calendar } from '@pitcher/vue-sdk'
 // must be reactive
 const selectedDate = '2020-08-01T11:00:00.000'
 
-// specific eventDates
-const eventDates = [
-    {
-        date: new Date(), // today
-        message: 'National Day',
-        class: 'red'
-    },
-    ...
-    ...
-]
 // disabledDates
-const disabledDates = [
-    {
-        date: new Date(), // today
-        message: 'Not selectable',
-    },
-    ...
-    ...
-]
+const disabledDates = [{ weekdays: [2, 3, 7] }, [new Date()]]
 ```
 
 ```html
@@ -224,9 +165,6 @@ const disabledDates = [
 <!-- Using fluid, fixed input width, smaller input size -->
 <Calendar v-model="selectedDate" fluid size="small" max-width="300px" />
  
-<!-- Using with event dates -->
-<Calendar v-model="selectedDate" :event-dates="eventDates" />
-
 <!-- Using with disabled dates -->
 <Calendar v-model="selectedDate" :disabled-dates="disabledDates" />
 ```
