@@ -81,11 +81,18 @@ export default {
         color: {
             type: String,
             validator: value => {
-                return (
-                    ['blue', 'gray', 'red', 'orange', 'yellow', 'green', 'teal', 'indigo', 'purple', 'pink'].indexOf(
-                        value
-                    ) !== -1
-                )
+                return [
+                    'blue',
+                    'gray',
+                    'red',
+                    'orange',
+                    'yellow',
+                    'green',
+                    'teal',
+                    'indigo',
+                    'purple',
+                    'pink'
+                ].includes(value)
             }
         }
     },
