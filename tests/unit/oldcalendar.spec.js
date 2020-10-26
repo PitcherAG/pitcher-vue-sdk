@@ -27,7 +27,7 @@ describe('OldCalendar.vue', () => {
         await wrapper.vm.$nextTick()
     }
 
-    it('DataTable mounts properly', async () => {
+    it('Calendar mounts properly', async () => {
         expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.value)
         expect(wrapper.find('input').element.placeholder).toBe(wrapper.vm.$props.defaultText)
     })
