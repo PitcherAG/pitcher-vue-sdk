@@ -40,7 +40,7 @@
             @input="emitInput($event)"
         />
 
-        <OldCalendar
+        <Calendar
             v-if="field.type === 'date' || field.type === 'datetime'"
             :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :type="field.type"
@@ -115,13 +115,13 @@
 <script>
 import { computed, ref } from '@vue/composition-api'
 import Dropdown from './Dropdown'
-import OldCalendar from './OldCalendar'
+import Calendar from './Calendar'
 import Checkbox from './Checkbox'
 import { formatCurrency, formatDate } from '..'
 
 export default {
     name: 'ObjectFormField',
-    components: { Checkbox, OldCalendar, Dropdown },
+    components: { Checkbox, Calendar, Dropdown },
     props: {
         field: { required: true },
         index: {
@@ -176,5 +176,3 @@ export default {
     }
 }
 </script>
-
-<style scoped></style>
