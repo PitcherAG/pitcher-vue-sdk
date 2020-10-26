@@ -150,7 +150,6 @@ export default {
             }
             // format
             result = props.valueFormatter(result)
-            console.log('value change:', result)
             emit('input', result)
         }
 
