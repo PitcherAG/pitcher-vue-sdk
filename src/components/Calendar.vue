@@ -29,6 +29,9 @@ export default {
             type: String,
             default: () => $gettext('Date/Time')
         },
+        locale: {
+            type: String
+        },
         firstDayOfWeek: {
             type: Number,
             default: 2
@@ -129,6 +132,7 @@ export default {
             availableDates: props.availableDates ? props.availableDates : undefined,
             popover: props.popover,
             color: props.color ? props.color : undefined,
+            locale: props.locale,
             theme: {
                 navPopoverContainer: {
                     light: 'vc-rounded text-style--dark vc-bg-white vc-shadow'
