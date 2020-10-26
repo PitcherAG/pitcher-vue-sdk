@@ -26,7 +26,7 @@ export default {
         minDate: [String, Date],
         maxDate: [String, Date],
         defaultText: {
-            type: String,
+            type: [String, Function],
             default: () => $gettext('Date/Time')
         },
         locale: {
