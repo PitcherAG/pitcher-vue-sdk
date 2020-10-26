@@ -35,6 +35,13 @@ export default {
         },
         disabledDates: Array,
         availableDates: Array,
+        popover: {
+            type: Object,
+            default: () => ({
+                visibility: 'focus',
+                keepVisibleOnInput: true
+            })
+        },
         disableValueFormatting: {
             type: Boolean,
             default: false
@@ -120,10 +127,7 @@ export default {
             firstDayOfWeek: props.firstDayOfWeek,
             disabledDates: props.disabledDates ? props.disabledDates : undefined,
             availableDates: props.availableDates ? props.availableDates : undefined,
-            popover: {
-                visibility: 'focus',
-                keepVisibleOnInput: true
-            },
+            popover: props.popover,
             color: props.color ? props.color : undefined,
             theme: {
                 navPopoverContainer: {
