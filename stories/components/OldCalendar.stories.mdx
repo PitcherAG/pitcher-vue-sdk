@@ -1,0 +1,232 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+import Calendar from '@/components/Calendar'
+
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+        'v-model': {
+            description: 'date value',
+            type: { required: true },
+            table: {
+                type: { summary: 'string | date' }
+            }
+        },
+        value: {
+            table: { 
+                disable: true
+            },
+        },
+        type: {
+            description: 'type of calendar'
+        },
+        minDate: {
+            description: 'minimum date that can be selected in calendar'
+        },
+        maxDate: {
+            description: 'maximum date that can be selected in calendar'
+        },
+        startMode: {
+            description: 'calendar mode'
+        },
+        defaultText: {
+            description: 'default text when there is not any value selected'
+        },
+        showAmPm: {
+            description: 'show calendar hours with am/pm format, default is 24H format.'
+        },
+        showToday: {
+            description: 'show/hide today button in calendar popup'
+        },
+        showWeekNumbers: {
+            description: 'show/hide week numbers in calendar popup'
+        },
+        disabledDaysOfWeek: {
+            description: 'disable some days of the week from selection (0= Sunday, 1=Monday, ...)'
+        },
+        disabledDates: {
+            description: 'an array of Date-Objects or Objects with given message to show in a popup when hovering over the appropriate date. ex: `{ date: Date, message: String }`'
+        },
+        enabledDates: {
+            description: 'an array of Date-Objects to be enabled for selection. All other dates are disabled'
+        },
+        eventDates: {
+            description: 'an array of Date-Objects or Objects with given message to show in a popup when hovering over the appropriate date and an individual class for the cell. ex: `{ date: Date, message: string, class: string }`'
+        },
+        eventClass: {
+            description: 'default class to be added to each cell of an eventDate date element when no specific class is given to the eventDate element'
+        },
+        disableYear: {
+            description: 'disable year selection mode'
+        },
+        disableMonth: {
+            description: 'disable year selection mode'
+        },
+        disableMinute: {
+            description: 'disable minute selection mode'
+        },
+        disableValueFormatting: {
+            description: 'calendar component formats selected value when user selects a date/time. To disable this feature you can use this property'
+        },
+        valueFormatter: {
+            description: 'formatter function to format value before it is emitted. See definitions to see how it works'
+        },
+        disableInputFormatting: {
+            description: 'calendar component formats the value that is shown in input. To disable this feature you can use this property'
+        },
+        inputFormatter: {
+            description: 'formatter function to format value before it is shown in input. See definitions to see how it works'
+        },
+        setting: {
+            description: 'Fomantic calendar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/calendar.html#/settings'
+        },
+        action: {
+            description: 'default action when initializing fomantic calendar element. Default is activate.'
+        },
+        fluid: {
+            description: 'makes the component width fluid 100% by adding fluid class to the input'
+        },
+        disabled: {
+            description: 'disables the component thru adding disabled class to the input'
+        },
+        loading: {
+            description: 'sets the calendar to loading state thru adding loading class to the input'
+        },
+        error: {
+            description: 'adds error class to the input'
+        },
+        minWidth: {
+            description: 'min-width css property for input element'
+        },
+        maxWidth: {
+            description: 'max-width css property for input element'
+        },
+        size: {
+            description: 'mini | tiny | small | medium | large | big | huge | massive'
+        }
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => {
+    return {
+        props: {
+            value: {
+                default: '2020-08-21T11:00:00.000'
+            },
+            disabled: {
+                default: false
+            },
+            loading: {
+                default: false
+            }
+        },
+        components: { Calendar },
+        template: '<Calendar v-bind="$props" />'
+    }
+} 
+
+<!-- Define story settings here -->
+<Meta 
+    title="Components/Calendar"
+    component={Calendar}
+    argTypes={argTypes}
+    args={args}
+/>
+
+# Calendar
+Fomantic Calendar
+
+<Story name="Default">
+    {Template.bind({})}
+</Story>
+
+## Disabled
+<Story name="Disabled" args={{ disabled: true }}>
+    {Template.bind({})}
+</Story>
+
+## Loading
+<Story name="Loading" args={{ loading: true }}>
+    {Template.bind({})}
+</Story>
+
+### Available props and slots
+<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
+<ArgsTable story="Default" />
+
+### Available events
+| event | description |
+| :--- | :--- |
+| `@input` | default v-model input event
+| `@onBeforeChange` | fired before the input is changed
+| `@onShow` | fired before calendar popup is shown
+| `@onVisible` | fired when calendar popup is visible
+| `@onHide` | fired before calendar popup is hidden
+| `@onHidden` | fired when calendar popup is hidden
+| `@onSelect` | fired when user clicks on a date/time from popup
+
+### Definitions
+```javascript
+// default value formatter before emitted to parent
+valueFormatter: function(date) {
+    // if date includes time, returns formats value as ISO
+    if (this.type.includes('time')) {
+        return date.toISOString()
+    }
+
+    // otherwise formats as date time
+    const yyyy = date.getFullYear().toString()
+    const mm = (date.getMonth() + 1).toString()
+    const dd = date.getDate().toString()
+    return `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
+}
+
+// default input formatter before value changed in input
+// Uses SDK's internal date formatter
+inputFormatter: date => formatDate(date)
+```
+
+### Usage
+```javascript
+import { Calendar } from '@pitcher/vue-sdk'
+
+// must be reactive
+const selectedDate = '2020-08-01T11:00:00.000'
+
+// specific eventDates
+const eventDates = [
+    {
+        date: new Date(), // today
+        message: 'National Day',
+        class: 'red'
+    },
+    ...
+    ...
+]
+// disabledDates
+const disabledDates = [
+    {
+        date: new Date(), // today
+        message: 'Not selectable',
+    },
+    ...
+    ...
+]
+```
+
+```html
+<!-- Simple usage -->
+<Calendar v-model="selectedDate" />
+
+<!-- Using fluid, fixed input width, smaller input size -->
+<Calendar v-model="selectedDate" fluid size="small" max-width="300px" />
+ 
+<!-- Using with event dates -->
+<Calendar v-model="selectedDate" :event-dates="eventDates" />
+
+<!-- Using with disabled dates -->
+<Calendar v-model="selectedDate" :disabled-dates="disabledDates" />
+```
