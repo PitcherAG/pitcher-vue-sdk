@@ -57,7 +57,8 @@ export default defineComponent({
             attrs: {
                 // minDate: '2020-08-07T11:20:00.000',
                 disableValueFormatting: false,
-                disableInputFormatting: false,
+                disableInputFormatting: false
+                // disabledDates: [{ weekdays: [2, 3, 7] }, [new Date()]]
             }
         })
 
