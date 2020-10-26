@@ -21,7 +21,7 @@ export default {
     props: {
         value: {
             type: [String, Date],
-            required: false
+            required: true
         },
         minDate: [String, Date],
         maxDate: [String, Date],
