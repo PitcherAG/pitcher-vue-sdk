@@ -36,7 +36,7 @@ class Actions {
         options.viewMode = options.viewMode == 1 ? 3 : 1
         options.file = file.vUrl
         options.pdfID = file.ID
-        options.title = this.addSlashes(file.body)
+        options.titleV = this.addSlashes(file.body)
         fireEvent('loadPDF', options)
     }
 
