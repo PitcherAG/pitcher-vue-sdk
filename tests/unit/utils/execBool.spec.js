@@ -32,12 +32,12 @@ describe('execBool', () => {
         const consoleSpy = jest.spyOn(console, 'error')
         const context = 'test'
         const expression = 'value === 1'
-        const res = execBool(expression, context)
+        execBool(expression, context)
         expect(consoleSpy).toHaveBeenCalledTimes(3)
         const message1 = consoleSpy.mock.calls[0][0]
         const message2 = consoleSpy.mock.calls[1][0]
         const message3 = consoleSpy.mock.calls[2][0]
-        expect(removeLineBreaksAndSpaces(message1)).toEqual('with(this){return Boolean(value === 1)}')
+        expect(global.removeLineBreaksAndSpaces(message1)).toEqual('with(this){return Boolean(value === 1)}')
         expect(message2 instanceof Error).toEqual(true)
         expect(message3).toEqual(context)
     })
