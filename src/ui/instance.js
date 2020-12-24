@@ -33,8 +33,8 @@ class PitcherInstance {
         this.fileActions.editFile()
     }
 
-    openContent(file) {
-        this.fileActions.openContent(file)
+    openContent(file, parameters) {
+        this.fileActions.openContent(file, parameters)
     }
 
     get categories() {
@@ -75,6 +75,10 @@ class PitcherInstance {
 
     launchFileWithKeyword(keyword) {
         this.fileActions.launchFileWithKeyword(keyword)
+    }
+
+    loadInteractive(file, parameters) {
+        this.fileActions.loadInteractive(file, parameters)
     }
 
     getExtraFieldValue(property, defaultValue) {
