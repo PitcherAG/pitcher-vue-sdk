@@ -3,4 +3,26 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Documentation/Instance/File Store" />
 
 # File Store
-NEED_EXPLANATION
+Store for instance files
+
+| Property  | Description  |
+|---|---|
+ files  | All file list retrieved from server data |
+ uiFiles  | Computed property for the files can be show in UI (see Miscellaneous) |
+ slides  | Slide list reetrieved from server data |
+ documentPath  | Base path for the documents |
+ presentations  | All presentations list from local database |
+ customs  | Custom deck list |
+ initialAllowedIDs  | Allowed file Id list saved when instance first opened (see Miscellaneous) |
+ allowedIDs  | Current allowed file Id list (see Miscellaneous) |
+
+ ## Miscellaneous
+ There are some criteria which decides if a file can be shown in UI. This are defined `shouldShowInUI` method
+ - File should not be a thumbnail 
+ - File typeV should not be one of 7,0,-1
+ - File should not an image file (image files contain background and ccategory logos)
+ - File should be ready and not expired (Any file can be distributed for a time period)
+
+ When Instance is ready, Impact tells all files Ids that are downloaded and ready to be shown in UI also, These file Ids are retrieved in `initialAllowedIDs`. When user starts a call which has pre-selected content, Impact re-notifies UI with new allowed file Ids, which are store in `allowedIDs`
+
+ It's UI's responsibility to filter files at a certain time based on this allowed Ids

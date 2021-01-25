@@ -3,4 +3,32 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Documentation/Instance/System Store" />
 
 # System Store
-NEED_EXPLANATION
+Store for system data
+
+| Property  | Description  |
+|---|---|
+ config  | Configuration of instance |
+ groups  | Relevant content data which is set via admin |
+ appID  | Id of the current Instance |
+ supportEmail  | Support email address |
+ deviceName  | Current device's name, which is defined when access given to a device |
+ metadata  | Current device's metadata information. This contains special keywords added to the device |
+ messages  | Push notification messages |
+ appName  | Instance's name |
+ systemLang  | Translation data (used in connect) |
+ locale  | Locale information (used in connect) |
+ userfullname  | Connect user's full name (used in connect) |
+ ajaxtoken  | Session token for ajax requests (used in connect) |
+ isCustomerUI  | Defines profile, if true user is HCP/Customer, if false user is rep |
+ batteryLevel  | Battert level (between 1 - 100) |
+ statusBadge  | Current event count waiting in the queue |
+ todoBadge  | Current opene to-do count (If there is an ongoing call, only the open ones that belong to that account) |
+
+ ## Getting extraField value
+ ExtraField is a config property, which is a json object and can contain instance specific settings. Parameters are property name and a default value in case property does not exist
+
+ ```javascript
+import { getExtraFieldValue } from '@pitcher/vue-sdk'
+
+getExtraFieldValue(property, defaultValue)
+ ```

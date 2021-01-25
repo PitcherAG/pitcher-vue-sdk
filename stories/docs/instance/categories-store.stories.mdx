@@ -3,4 +3,19 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Documentation/Instance/Categories Store" />
 
 # Categories Store
-NEED_EXPLANATION
+Store for instance categories. Values are retrieved from serverJSON
+
+| Property  | Description  |
+|---|---|
+ category  | Store the current category |
+ categories  | All categories  |
+ parentCategories  | Computed property for parent categories  |
+ subCategories  | Computed property for child categories  |
+
+ ## Miscellaneous
+
+When serverJSON data is retrieved, initial category has to be set, or some functions may not work properly. This is done by `initializeInstance` function which is the starting point
+
+Initial category is either the one as marked default or the last used category at earlier usage of the instance
+
+If user is not a test device, categories contain only the ones user has a content in it.

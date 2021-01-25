@@ -9,8 +9,21 @@ Here you can find actions that you can execute
 ```javascript
 import { exitApp } from '@pitcher/vue-sdk'
 
-exitApp()
+exitApp(options)
 ```
+
+options may have a property named `buttonOptions` which defines the actions after exiting the app. If neither options nor buttonOptions provided, impact will ask actions with popup
+
+| Value  | Action  |
+|---|---|
+ 1  | Exit App without and do nothing after |
+ 2  | Exit App then restart impact  |
+ 3  | Exit App then restart impact and open current instance  |
+
+ Example:
+ ```
+ exitApp({buttonOptions: 3})
+ ```
 
 ## Showing an alert box
 ```javascript

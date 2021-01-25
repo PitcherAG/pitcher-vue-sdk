@@ -3,4 +3,102 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Documentation/Instance/Detailing Store" />
 
 # Detailing Store
-NEED_EXPLANATION
+Store to handle detailing properties & options
+
+| Property  | Description  |
+|---|---|
+ currentContact  | Contact(s) in the current call (null if there is not an ongoing call)  |
+ currentAccount  | Account in the current call (null if there is not an ongoing call)  |
+ hasActiveCall  | Computed property indicating if there is an ongoing call  |
+ isFilterActive  | If content filtering is active  |
+ quickStartEnabled  | If user can quick start a call (enabled/disabled via config)  |
+ quickPlanningEnabled  | If user can use quick planning screen (enabled/disabled via config)  |
+ selectedDate  | date of the selected day from calendar  |
+ events  | Crm events/calls of the selected dat  |
+ unsubmitted  | UnSubmitted calls  |
+ syncEvents  | Synchronization events with a handler at backend (redirect events)  |
+
+## Start / Stop Call
+### startStopDetailing
+```javascript
+import { startStopDetailing } from '@pitcher/vue-sdk'
+
+startStopDetailing(options)
+```
+Options have 4 properties, contains position of the click event, and if not giveb defaul is used
+
+```
+///Default options
+xPos: 50, yPos: 30, widthV: 160, heightV: 50
+```
+
+### startPreCall
+For iOS / Android, shows native planning screen. For windows, either goes to quick or detailed planning screen by given options (Options have one property named `index`, 1 used for Quick, 2 used for Detailed planning screen in windows, and click event position parameters)
+
+```javascript
+import { startPreCall } from '@pitcher/vue-sdk'
+
+///Windows
+startPreCall({ index: 2 })
+
+///iOS & Android
+startPreCall({
+    xPos: 120,
+    yPos: 60,
+    widthV: 160,
+    heightV: 50
+})
+```
+
+### getCrmEventsByDate (Windows only)
+With given 2 paramaters, options & timestamp, gets crm events of that specific date
+
+```javascript
+import { getCrmEventsByDate } from '@pitcher/vue-sdk'
+
+///Windows
+getCrmEventsByDate({ xPos: 50, yPos: 30, widthV: 160, heightV: 50 }, 1610025217201)
+
+```
+
+### startDetailingWithID
+Used to start a specific call with given Id. Also for windows can be used to quick start & unplanned calls
+
+```javascript
+import { startDetailingWithID } from '@pitcher/vue-sdk'
+
+startDetailingWithID('1234')
+
+///Windows for un planned call
+startDetailingWithID('unplannedcall')
+
+///Windows for quick start
+startDetailingWithID('quickstart')
+```
+
+### resyncData
+Initiates synchronization 
+```javascript
+import { resyncData } from '@pitcher/vue-sdk'
+
+resyncData()
+
+```
+
+### removeEvent
+Removes a specific synchronization event.
+```javascript
+import { removeEvent } from '@pitcher/vue-sdk'
+
+removeEvent('1234')
+
+```
+
+### removeAllEvents
+Removes all synchronization events.
+```javascript
+import { removeAllEvents } from '@pitcher/vue-sdk'
+
+removeAllEvents()
+
+```

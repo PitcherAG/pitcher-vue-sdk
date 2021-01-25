@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js'
+import Fuse from 'fuse.js/dist/fuse.min.js'
 
 /**
  * fuse.js search

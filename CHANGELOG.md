@@ -1,8 +1,14 @@
 # Changelog
 
-## [NEXT: 1.5.1]
+## [NEXT: 1.5.2]
+
+## 1.5.1
 ### Changed
-### Added
+- loadConfig default parameter `source = 'modal'` added
+- detailingStore changes
+- documentation updates for instance store
+- fix user extra field in `query`
+- `fuse.js` & `moment` are now imported as CJS modules. No need to compile in consumer project
 
 ## 1.5.0
 ### Changed

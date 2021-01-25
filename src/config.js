@@ -39,9 +39,9 @@ export function useConfigStore() {
   return createStore(new ConfigStore())
 }
 
-export async function loadConfig() {
+export async function loadConfig(source = 'modal') {
   const store = useConfigStore()
-  let result = await fireEvent('getAppConfig', {})
+  let result = await fireEvent('getAppConfig', { source: source })
   console.log('app config', result)
   if (PLATFORM === 'IOS') {
     result.customCaches.push({

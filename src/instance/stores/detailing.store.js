@@ -2,6 +2,7 @@ import { PLATFORM } from '../../platform'
 import { fireEvent } from '../../event'
 import { createStore } from '../../store'
 import { eventHub } from '../../utils'
+import { loadConfig } from '../../config'
 import { reactive, computed } from '@vue/composition-api'
 
 const defaultOptions = { xPos: 50, yPos: 30, widthV: 160, heightV: 50 }
@@ -15,11 +16,22 @@ class DetailingStore {
     todaysCalls: [],
     isFilterActive: false,
     quickStartEnabled: true,
+    quickPlanningEnabled: true,
     selectedDate: null,
     events: [],
     unsubmitted: [],
-    syncEvents: []
+    syncEvents: [],
+    loggedIn: false
   })
+
+  async setLoggedIn(value) {
+    if (value && !this.state.loggedIn) {
+      const config = await loadConfig('homescreen')
+      this.state.quickStartEnabled = !config.disableQuickStart
+      this.state.quickPlanningEnabled = !config.disableQuickPlanning
+    }
+    this.state.loggedIn = value
+  }
 
   afterCallEnded() {
     this.state.currentContact = null
@@ -138,13 +150,28 @@ export function resyncData() {
 export function removeEvent(Id) {
   const store = useDetailingStore()
   fireEvent('removeEvent', { Id: Id })
-  store.syncEvents = store.syncEvents.filter(event => event.Id != Id)
+  store.state.syncEvents = store.state.syncEvents.filter(event => event.Id != Id)
 }
 
 export function removeAllEvents() {
   const store = useDetailingStore()
-  store.syncEvents.forEach(event => {
+  store.state.syncEvents.forEach(event => {
     fireEvent('removeEvent', { Id: event.Id })
   })
-  store.syncEvents = []
+  store.state.syncEvents = []
+}
+
+window.loggedOut = function() {
+  const store = useDetailingStore()
+  store.setLoggedIn(false)
+}
+
+window.updateCRM = function() {
+  const store = useDetailingStore()
+  store.setLoggedIn(true)
+}
+
+window.enableCrm = function(enabled) {
+  const store = useDetailingStore()
+  store.setLoggedIn(enabled === 'true')
 }

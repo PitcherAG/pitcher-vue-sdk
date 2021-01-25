@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from 'moment/min/moment-with-locales.js'
 import { useParamsStore } from '../params'
 import { useI18nStore } from '../i18n/i18n'
 
