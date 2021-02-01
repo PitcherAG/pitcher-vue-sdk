@@ -1,5 +1,6 @@
 import { createStore } from './store'
 import { getFilesWithKeyword } from './files'
+import { getFullFilepath } from './utils/filePath'
 
 class ValidationsStore {
   id = 'validation'
@@ -18,8 +19,8 @@ export function useValidationsStore() {
 export async function loadValidations(keyword) {
   const store = useValidationsStore()
   if (!store.loaded) {
-    const file = await getFilesWithKeyword(keyword)
-    const res = await fetch('../../../' + file[0].vUrl)
+    const files = await getFilesWithKeyword(keyword)
+    const res = await fetch(getFullFilepath(files[0].vUrl))
     const data = await res.json()
     store.state = Object.assign(store.state, data)
     store.loaded = true

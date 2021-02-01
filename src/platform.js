@@ -1,6 +1,10 @@
 function getMobileOperatingSystem() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera
 
+  if (navigator.userAgent.indexOf('emulate-ios') !== -1) {
+    console.warn('[VUE-SDK]: PLATFORM is being emulated as IOS')
+    return 'IOS'
+  }
   if (window.parent !== window.self) {
     return 'CONNECT'
   }

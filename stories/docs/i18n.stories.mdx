@@ -94,16 +94,16 @@ packageCategory | string | `undefined` | Define if the category named is differe
 ## Scripts
 
 ### Extract Messages
-Run `npm run config-gettext-extract` to extract messages from your source code.
+Run `npx config-gettext-extract` to extract messages from your source code.
 
 ### Translate Messages
 Add the `google.json` from our [vue-project-template](https://github.com/PitcherAG/vue-project-template/) to the root of your project and run `npm run config-gettext-translate` to translate the messages to the configured languages.
 
 ### Compile Messages
-Run `npm run config-gettext-compile` to compile your translations from `.po` to `.json`.
+Run `npx config-gettext-compile` to compile your translations from `.po` to `.json`.
 
 
-## Installation
+# Installation
  
 ### Environmental Variables
 Add the following lines to you `vue.config.json` to access the configured languages in your vue project.
@@ -140,7 +140,7 @@ export default {
       const params = useParamsStore()
       const i18n = useI18nStore()
       await i18n.setLanguage(params.locale.value, {load: false}) // false does not load any translation files but supports dates and number formatting
-      window.console.info('data loading finished')
+      console.info('data loading finished')
       loaded.value = true
     })
     return { loaded }
@@ -200,49 +200,12 @@ format a number value into a localized currency:
 
 ## Translations
 
-
 ### Workflow
 
 1. Mark strings for translation
 2. Collect strings with `npm run config-gettext-extract`
 3. Edit `.po` files
 4. Transform `.po` files to `json` with `npm run config-gettext-compile`
-
-
-### Installation
-
-in your `main.js`
-
-```javascript
-import { TranslationPlugin } from '@pitcher/vue-sdk'
-
-Vue.use(TranslationPlugin)
-```
-
-In your `App.vue` call `await setLanguage('en_US', true)` to load the file `translations/en_US.json` that is in the public folder
-
-```javascript
-import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
-
-export default {
-  setup() {
-    console.log('App setup')
-    const loaded = ref(false)
-
-    onMounted(async () => {
-      await loadParams()
-      await loadConfig()
-      const params = useParamsStore()
-      const i18n = useI18nStore()
-      await i18n.setLanguage(params.locale.value, true)
-      window.console.info('data loading finished')
-      loaded.value = true
-    })
-    return { loaded }
-  }
-}
-
-```
 
 ### Marking strings for translation
 
