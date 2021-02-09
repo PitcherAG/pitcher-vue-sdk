@@ -12,11 +12,12 @@ export function removeFavorite(file) {
 }
 
 export async function getFavorites() {
-  const favoriteFileIds = await fireEvent('getFavoriteItems', { source: 'homescreen' })
-  const store = useFilesStore()
-  const map = {}
-  if (favoriteFileIds && favoriteFileIds.length) {
-    favoriteFileIds.forEach(Id => (map[Id] = true))
-  }
-  return store.markFavorites(map)
+  fireEvent('getFavoriteItems', { source: 'homescreen' }).then(favoriteFileIds => {
+    const store = useFilesStore()
+    const map = {}
+    if (favoriteFileIds && favoriteFileIds.length) {
+      favoriteFileIds.forEach(Id => (map[Id] = true))
+    }
+    store.markFavorites(map)
+  })
 }

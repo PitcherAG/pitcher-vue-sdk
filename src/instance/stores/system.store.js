@@ -18,8 +18,8 @@ class SystemStore {
     ajaxtoken: null,
     isCustomerUI: false,
     batteryLevel: 0,
-    statusBadge: '',
-    todoBadge: ''
+    statusBadge: 0,
+    todoBadge: 0
   })
 }
 
@@ -51,11 +51,11 @@ export function getExtraFieldValue(property, defaultValue) {
 window.updateStatusBadge = function(value) {
   const store = useSystemStore()
   value = parseInt(value)
-  store.state.statusBadge = value || ''
+  store.state.statusBadge = value || 0
 }
 
 window.updateTodoBadge = function(value) {
   const store = useSystemStore()
   value = parseInt(value)
-  store.state.todoBadge = value || ''
+  store.state.todoBadge = value || 0
 }

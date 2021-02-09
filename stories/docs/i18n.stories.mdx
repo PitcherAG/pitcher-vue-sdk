@@ -94,14 +94,21 @@ packageCategory | string | `undefined` | Define if the category named is differe
 ## Scripts
 
 ### Extract Messages
+Create `locale` folder in your project root if it does not exist.
 Run `npx config-gettext-extract` to extract messages from your source code.
 
 ### Translate Messages
-Add the `google.json` from our [vue-project-template](https://github.com/PitcherAG/vue-project-template/) to the root of your project and run `npm run config-gettext-translate` to translate the messages to the configured languages.
+Add the `google.json` from our [vue-project-template](https://github.com/PitcherAG/vue-project-template/) to the root of your project and run `npx config-gettext-translate` to translate the messages to the configured languages.
 
 ### Compile Messages
 Run `npx config-gettext-compile` to compile your translations from `.po` to `.json`.
 
+You can also add these to your scripts:
+```javascript
+  "gettext:extract": "npx config-gettext-extract",
+  "gettext:translate": "export GOOGLE_APPLICATION_CREDENTIALS=google.json;npx config-gettext-translate",
+  "gettext:compile": "npx config-gettext-compile"
+```
 
 # Installation
  
@@ -123,27 +130,31 @@ import { TranslationPlugin } from '@pitcher/vue-sdk'
 Vue.use(TranslationPlugin, { availableLanguages: JSON.parse(process.env.VUE_APP_LANGUAGES) })
 ```
 
-In your App.vue call `await setLanguage('en')` to load the file `translations/en/app.json` that is in the public folder.
+In your App.vue call, import `useI18nStore` first, then use `await i18n.setLanguage('en')` to load the file `translations/en/app.json` that is in the public folder.
 If you don't need translations but just the number and date formatting: `await setLanguage('en', {load: false})`
 
 ```javascript
-import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
+import { useParamsStore, useI18nStore } from '@pitcher/vue-sdk'
+// if you want to use browser language
+import { useBrowserLanguage } from '@pitcher/vue-sdk/src/i18n/browser'
 
 export default {
   setup() {
-    console.log('App setup')
-    const loaded = ref(false)
+    // i18 store
+    const i18n = useI18nStore()
 
     onMounted(async () => {
-      await loadParams()
-      await loadConfig()
-      const params = useParamsStore()
-      const i18n = useI18nStore()
-      await i18n.setLanguage(params.locale.value, {load: false}) // false does not load any translation files but supports dates and number formatting
-      console.info('data loading finished')
-      loaded.value = true
+      // use with browser language
+      const { getAvailableBrowserLanguage } = useBrowserLanguage()
+      const lang = getAvailableBrowserLanguage(Object.keys(i18n.state.availableLanguages))
+      await i18n.setLanguage(lang)
+      
+      // usage with params
+      // const params = useParamsStore()
+      // await i18n.setLanguage(params.locale.value, {load: false}) // false does not load any translation files but supports dates and number formatting
+
     })
-    return { loaded }
+    return { }
   }
 }
 ```
@@ -203,9 +214,9 @@ format a number value into a localized currency:
 ### Workflow
 
 1. Mark strings for translation
-2. Collect strings with `npm run config-gettext-extract`
+2. Collect strings with `npx config-gettext-extract`
 3. Edit `.po` files
-4. Transform `.po` files to `json` with `npm run config-gettext-compile`
+4. Transform `.po` files to `json` with `npx config-gettext-compile`
 
 ### Marking strings for translation
 
@@ -244,7 +255,7 @@ or
 After all strings have been marked like this we will need to collect all this marked strings.
 
 ```
-npm run config-gettext-extract
+npx config-gettext-extract
 ```
 
 This will collect all `$t` `$gettext` and `$ngettext` strings marked as such and write
@@ -253,7 +264,7 @@ them into the `locale` folder into `.po` files. `.po` files can be edited with a
 > WARNING: **By default all strings will be auto translated with google translate. But all strings will be marked "fuzzy".**  
 This means you should check them and remove the "fuzzy" label or in PoEdit remove the "needs work".
 
-After the translations have been done another run of `npm run config-gettext-compile` will transform the `.po` file
+After the translations have been done another run of `npx config-gettext-compile` will transform the `.po` file
 into json files in the `public/translations` folder.
 
 ### Adding more languages

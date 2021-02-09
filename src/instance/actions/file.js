@@ -143,6 +143,7 @@ function loadInteractive(file, parameters) {
 
 export function openContent(file, parameters) {
   if (categoryActionMapping[file.category]) {
+    file.lastLaunchTime = new Date().getTime().toString()
     categoryActionMapping[file.category](file, parameters)
   }
 }

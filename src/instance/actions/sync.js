@@ -11,10 +11,11 @@ async function getiOSSyncEvents(source = 'homescreen') {
   const store = useDetailingStore()
   const appName = useSystemStore().state.appName
   const selectQuery =
-    "SELECT event_name, event_time, lastResponse FROM tbl_reports_v3 WHERE event_name LIKE '%event_redirect%'"
+    "SELECT rowid,event_name, event_time, lastResponse FROM tbl_reports_v3 WHERE event_name LIKE '%event_redirect%'"
   const events = await query(selectQuery, appName, false, source)
   store.state.syncEvents = events.map(event => {
     return {
+      Id: event.rowid,
       name: event.event_name,
       time: event.event_time,
       date: event.event_time ? new Date(parseInt(event.event_time)) : '',
@@ -26,10 +27,11 @@ async function getiOSSyncEvents(source = 'homescreen') {
 
 async function getWindowsSyncEvents(source = 'homescreen') {
   const store = useDetailingStore()
-  const selectQuery = "SELECT Name, Time, Status FROM SQLiteEvent WHERE Name LIKE '%event_redirect%'"
+  const selectQuery = "SELECT Id, Name, Time, Status FROM SQLiteEvent WHERE Name LIKE '%event_redirect%'"
   const events = await query(selectQuery, null, false, source)
   store.state.syncEvents = events.map(event => {
     return {
+      Id: event.Id,
       name: event.Name,
       time: event.Time,
       date: event.Time ? new Date(parseInt(event.Time)) : '',

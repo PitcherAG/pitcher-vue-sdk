@@ -14,6 +14,14 @@ https://pitcherag.github.io/pitcher-vue-sdk/
 
 [Changelog](CHANGELOG.md)
 
+## Project setup
+To start development you need Node.js and NPM installed on your machine.
+
+1. `npm install` if you are on npm version < 7 or\
+   `npm install --legacy-peer-deps` if you are on npm >= 7
+2. `npm run demo`
+3. Profit! You can start making changes and they will be hot reloaded
+
 ## How to contribute
 Step by step contribution guide
 

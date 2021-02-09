@@ -11,7 +11,8 @@ export function getPitcherFolderPath() {
     const parts = splitStringAt(location, pos)
     location = parts[0] + parts[1].replace('zip//', 'zip/')
   }
-  return location.split('zip/')[0]
+  location = location.split('zip/')[0]
+  return location.endsWith('/') ? location : location + '/'
 }
 
 export function getFullFilepath(vUrl) {
