@@ -125,13 +125,38 @@ export async function loadConfig(source = 'modal') {
       objectName: 'Account',
       sfObjectName: 'Account',
       tableToCache: 'SQLiteSfAccount',
-      query: result.sfdcAccountQuery
+      query: result.sfdcAccountQuery,
+      fieldTypes: {
+        BillingCity: 'TEXT',
+        BillingCountry: 'TEXT',
+        BillingStreet: 'TEXT',
+        Id: 'TEXT',
+        ExternalId: 'TEXT',
+        Json: 'TEXT',
+        JsonUntouched: 'TEXT',
+        LastModifiedDate: 'TEXT',
+        LastModifiedTimeStamp: 'INTEGER',
+        LastVisitTimeStamp: 'INTEGER',
+        Lat__c: 'REAL',
+        Long__c: 'REAL',
+        Name: 'TEXT'
+      }
     })
     result.customCaches.push({
       objectName: 'Contact',
       sfObjectName: 'Contact',
       tableToCache: 'SQLiteSfContact',
-      query: result.sfdcContactQuery
+      query: result.sfdcContactQuery,
+      fieldTypes: {
+        Id: 'TEXT',
+        ExternalId: 'TEXT',
+        LastModifiedDate: 'TEXT',
+        Name: 'TEXT',
+        AccountId: 'TEXT',
+        Email: 'TEXT',
+        Json: 'TEXT',
+        JsonUntouched: 'TEXT'
+      }
     })
     result.customCaches.push({
       objectName: 'Call',
@@ -143,10 +168,18 @@ export async function loadConfig(source = 'modal') {
       objectName: 'User',
       sfObjectName: 'User',
       tableToCache: 'SQLiteSfUser',
-      query: ''
+      query: '',
+      fieldTypes: {
+        Id: 'TEXT',
+        IsActive: 'INTEGER',
+        LastModifiedDate: 'TEXT',
+        FirstName: 'TEXT',
+        LastName: 'TEXT',
+        Json: 'TEXT'
+      }
     })
   } else {
-    throw new Error('platform not supported:' + PLATFORM)
+    throw new Error('Platform not supported: ' + PLATFORM)
   }
   for (const a in result) {
     store.state[a] = result[a]

@@ -1,6 +1,6 @@
 {
   "name": "@pitcher/vue-sdk",
-  "version": "1.5.3",
+  "version": "1.5.4-beta.1",
   "description": "VueJS Development Tools for the use in Pitcher Impact",
   "author": "Pitcher AG",
   "bin": {
@@ -13,9 +13,12 @@
     "config-gettext-extract": "node src/gettext/extract-cli.js",
     "config-gettext-translate": "GOOGLE_APPLICATION_CREDENTIALS=google.json node src/gettext/translate-cli.js",
     "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
+    "google:decrypt": "bash -c 'if [[ ! -f google.json ]]; then gpg --decrypt --output google.json google.json.gpg; fi'",
+    "google:encrypt": "gpg --symmetric --cipher-algo AES256 google.json",
+    "google:install": "brew install gpg",
     "lint": "vue-cli-service lint",
     "npm link": "npm link",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "npm run google:decrypt && GOOGLE_APPLICATION_CREDENTIALS=google.json vue-cli-service test:unit",
     "storybook": "start-storybook -s ./stories/assets -p 6006",
     "build:storybook": "build-storybook -o storybook-build -s ./stories/assets",
     "deploy:storybook": "npm run build:storybook && storybook-to-ghpages -e=storybook-build && rimraf storybook-build"
@@ -55,7 +58,7 @@
     "eslint-plugin-vue": "^7.1.0",
     "gettext-parser": "^4.0.3",
     "glob": "^7.1.6",
-    "husky": "^4.2.5",
+    "husky": "^5.1.1",
     "jest": "^25.5.4",
     "jquery": "^3.5.1",
     "lint-staged": "^10.2.4",
@@ -63,7 +66,7 @@
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
     "sass": "^1.26.3",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^10.1.1",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12"
   },

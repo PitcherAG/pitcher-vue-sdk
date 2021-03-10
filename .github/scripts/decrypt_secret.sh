@@ -7,4 +7,4 @@ gpg --quiet \
 --yes \
 --decrypt \
 --passphrase="$GOOGLE_SECRET" \
---output $HOME/secrets/google.json google.json.gpg
+--output google.json google.json.gpg

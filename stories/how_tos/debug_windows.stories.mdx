@@ -46,6 +46,34 @@ We need to add the root certificate to any laptops, desktops, tablets, and phone
 
 Either attach the application in VisualStudio for the JavaScript console and DOM explorer or add VorlonJS to your `index.html`.
 
+#### Download Visual Studio
+
+Note: There is no javascript console in vs2019 (16.8 version and before)
+
+1. Download vs2015 or vs2017 or vs2019 community editions 
+2. Select `ASP.NET and web development` package when installing
+
+#### Install missing Visual Studio dependencies 
+
+1. Open Visual Studio Installer
+2. Install `ASP.NET and web development` package, if it is not already installed
+
+#### Attach app in Visual studio 2017
+
+1. Run Pitcher Impact app
+2. Click on vs `Top menu` => `Debug` => `Other Debug Targets` => `Debug Installed App Package`
+3. Search for `Pitcher Impact` and click on the result (should be under `Running` result set)
+4. On list `Debug this code type:` select `Script Only`
+5. Click button `Attach` 
+  
+#### Debug app in Visual studio 2017
+
+1. DOM Explorer: click vs Top menu `Debug` => `Windows` => `DOM explorer` => `Show All`
+2. JS console:   click vs Top menu `Debug` => `Windows` => `JavaScript Console` 
+3. The Vue apps are located inside an `index.html`
+4. Use `DOM element highlighting` button (up left corner into DOM explorer tabs)
+5. Use `Select element` button (up left corner into DOM explorer tabs)
+
 #### Add VorlonJS
 
 1. Replace your_project and add the script tag: `<script src="https://vorlonjs.pitcher.com/vorlon.js/your_project"></debug/script>`

@@ -1,4 +1,5 @@
 import { fireEvent } from '../event'
+import { PLATFORM } from '../platform'
 
 let cache = {}
 
@@ -63,7 +64,10 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
 
           for (let j = 0; j < e.columns.length; j++) {
             const column = e.columns[j]
-
+            let fieldData = res[j]
+            if (PLATFORM === 'WINDOWS' && typeof fieldData === 'string') {
+              fieldData = fieldData.replace(/''/g, "'")
+            }
             if (
               column === 'extraField' ||
               column === 'account' ||
@@ -73,7 +77,7 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
               column === 'user' ||
               column === 'userObject'
             ) {
-              const o = JSON.parse(res[j])
+              const o = JSON.parse(fieldData)
               for (const n in o) {
                 if (Object.prototype.hasOwnProperty.call(o, n) && n !== 'attributes') {
                   if (!(removeNull && o[n] === null)) {
@@ -82,10 +86,10 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
                 }
               }
             } else {
-              if (typeof res[j] == 'undefined') {
+              if (typeof fieldData == 'undefined') {
                 obj[column] = null
               } else {
-                obj[column] = res[j]
+                obj[column] = fieldData
               }
             }
           }

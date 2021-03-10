@@ -13,10 +13,11 @@ On your project, be sure that you have these dependencies installed
 - "sass": "^1.26.3" (devDependency)
 - "sass-loader": "^8.0.2" (devDependency)
 ```
-  
+
  If you only miss SASS run
  ```bash
- npm install -D sass sass-loader
+ # sass-loader@11 only allows webpack >= 5
+ npm install -D sass sass-loader@10
  ```
 
 ## Installation
