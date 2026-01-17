@@ -41,7 +41,7 @@
     "@storybook/addon-essentials": "^6.3.4",
     "@storybook/addon-links": "^6.1.10",
     "@storybook/storybook-deployer": "^2.8.7",
-    "@storybook/vue": "^6.3.4",
+    "@storybook/vue": "^7.6.21",
     "@vue/cli-plugin-babel": "^4.5.9",
     "@vue/cli-plugin-eslint": "^4.5.9",
     "@vue/cli-plugin-unit-jest": "^4.5.9",
