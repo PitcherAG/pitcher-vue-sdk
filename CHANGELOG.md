@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.17.1...v1.17.2) (2026-09-10)
+
+
+### Bug Fixes
+
+* placeholder interpolation masks translations from other chained translators ([9a5e8be](https://github.com/PitcherAG/pitcher-vue-sdk/commit/9a5e8befc2e020cd5d61bec6e6ba0fd15f95a066))
+
 ## [1.17.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.17.0...v1.17.1) (2023-06-09)
 
 
