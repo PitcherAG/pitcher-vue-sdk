@@ -49,7 +49,7 @@ export const useI18nStore = () => {
   return createStore(new I18nStore())
 }
 
-export function trans(msgid, n = 0, placeholders) {
+export function trans(msgid, n = 0) {
   // eslint-disable-next-line eqeqeq
   if (msgid == '') {
     return msgid
@@ -81,16 +81,29 @@ export function trans(msgid, n = 0, placeholders) {
     translated = msgid
   }
 
-  if (placeholders && translated.indexOf('{') > -1) {
-    translated = renderSimpleContext(translated, placeholders)
-  }
-
   return translated
 }
 
-const $t = (msgid, context) => trans(msgid, 1, context)
-const $gettext = (msgid, context) => trans(msgid, 1, context)
-const $ngettext = (msgid, n, context) => trans(msgid, n, context)
+// Placeholder interpolation happens OUTSIDE trans() and outside the repeating-translator
+// chain below, not inside trans() itself. trans() always changed its output whenever it
+// fell back to msgid and interpolated (values get filled in either way), so the chain's
+// "did a translator already handle this?" check - comparing a translator's output to the
+// original msgid - could never tell an untranslated-but-interpolated fallback apart from
+// a real translation: whichever translator ran first always "won", even an empty/
+// unpopulated store from another bundle that never loaded a language pack (this is how a
+// second app - e.g. pitcher-impact-live-controls, loaded on the same page as another
+// app's window.$t already correctly set up - can silently mask perfectly good
+// translations). Interpolating once, after the chain has fully resolved which
+// translator's answer to use, keeps that comparison meaningful.
+export function applyPlaceholders(translated, placeholders) {
+  return placeholders && typeof translated === 'string' && translated.indexOf('{') > -1
+    ? renderSimpleContext(translated, placeholders)
+    : translated
+}
+
+const $t = (msgid) => trans(msgid, 1)
+const $gettext = (msgid) => trans(msgid, 1)
+const $ngettext = (msgid, n) => trans(msgid, n)
 
 const translationsRegistry = {}
 const translationFunctions = {
@@ -129,20 +142,35 @@ const originalTranslationsFunctions = {
   $ngettext: window.$ngettext,
 }
 
+// Named (not inline) so the getter returns the same function reference on every access.
+// context is still forwarded into translationFunctions.$t/etc (harmless - our own trans()
+// ignores it now) so a chained *external* translator that expects it as a second argument
+// keeps working exactly as before; applyPlaceholders below is then a safe no-op for it,
+// since indexOf('{') finds nothing left once it has already interpolated.
+function publicT(msgid, context) {
+  return applyPlaceholders(translationFunctions.$t(msgid, context), context)
+}
+function publicGettext(msgid, context) {
+  return applyPlaceholders(translationFunctions.$gettext(msgid, context), context)
+}
+function publicNgettext(msgid, n, context) {
+  return applyPlaceholders(translationFunctions.$ngettext(msgid, n, context), context)
+}
+
 Object.defineProperty(window, '$t', {
-  get: () => translationFunctions.$t,
+  get: () => publicT,
   set: (v) => {
     registerRepeatingTranslator('$t', v)
   },
 })
 Object.defineProperty(window, '$gettext', {
-  get: () => translationFunctions.$gettext,
+  get: () => publicGettext,
   set: (v) => {
     registerRepeatingTranslator('$gettext', v)
   },
 })
 Object.defineProperty(window, '$ngettext', {
-  get: () => translationFunctions.$ngettext,
+  get: () => publicNgettext,
   set: (v) => {
     registerRepeatingTranslator('$ngettext', v)
   },
@@ -181,8 +209,10 @@ export function TranslationPlugin(_Vue, options = {}) {
 
   // An option to support translation with HTML content: `v-translate`.
   _Vue.directive('translate', Directive)
-  // Exposes instance methods.
-  _Vue.prototype.$gettext = $gettext
-  _Vue.prototype.$ngettext = $ngettext
-  _Vue.prototype.$t = $gettext
+  // Exposes instance methods. Not routed through the repeating-translator chain (matches
+  // prior behaviour) - only the placeholder interpolation moved, to stay consistent with
+  // window.$t/$gettext/$ngettext now that trans() itself no longer interpolates.
+  _Vue.prototype.$gettext = (msgid, context) => applyPlaceholders($gettext(msgid), context)
+  _Vue.prototype.$ngettext = (msgid, n, context) => applyPlaceholders($ngettext(msgid, n), context)
+  _Vue.prototype.$t = _Vue.prototype.$gettext
 }

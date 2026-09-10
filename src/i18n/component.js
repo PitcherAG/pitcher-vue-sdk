@@ -1,4 +1,4 @@
-import { trans } from './i18n'
+import { applyPlaceholders, trans } from './i18n'
 import { uid } from '../utils/uid'
 
 /**
@@ -62,7 +62,9 @@ export default {
         context = Object.assign({}, this.$parent, this.translateParams)
       }
 
-      return this.isPlural ? trans(this.translatePlural, this.translateN, context) : trans(this.msgid, 0, context)
+      return this.isPlural
+        ? applyPlaceholders(trans(this.translatePlural, this.translateN), context)
+        : applyPlaceholders(trans(this.msgid, 0), context)
     },
   },
   render(createElement) {

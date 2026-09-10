@@ -1,5 +1,5 @@
 import looseEqual from './looseEqual'
-import { trans, useI18nStore } from './i18n'
+import { applyPlaceholders, trans, useI18nStore } from './i18n'
 import { uid } from '../utils/uid'
 
 const updateTranslation = (el, binding, vnode) => {
@@ -26,7 +26,9 @@ const updateTranslation = (el, binding, vnode) => {
     context = Object.assign({}, vnode.context, binding.value)
   }
 
-  el.innerHTML = isPlural ? trans(translatePlural, translateN, context) : trans(msgid, 0, context)
+  el.innerHTML = isPlural
+    ? applyPlaceholders(trans(translatePlural, translateN), context)
+    : applyPlaceholders(trans(msgid, 0), context)
 }
 
 /**
