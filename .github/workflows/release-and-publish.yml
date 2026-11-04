@@ -3,17 +3,30 @@ on:
   push:
     branches:
       - main
+
+# Publishing uses npm trusted publishing (OIDC), not an npm token.
+# @pitcher/vue-sdk has a Trusted Publisher on npmjs.com for
+# PitcherAG/pitcher-vue-sdk and this workflow file (release-and-publish.yml).
+# It needs a GitHub-hosted runner and npm 11.5.1+. semantic-release still uses
+# CI_GH_TOKEN for the tag, the GitHub release and the CHANGELOG commit.
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   release-and-publish:
     name: Release and publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Install dependencies
         run: npm install
+      # Runs with npmPublish: false (see release.config.js): it bumps the
+      # version in package.json, tags, creates the GitHub release and commits
+      # CHANGELOG.md, but doesn't publish to npm.
       - name: Semantic release
         uses: cycjimmy/semantic-release-action@v2
         id: semantic_release
@@ -24,4 +37,19 @@ jobs:
             @semantic-release/git@9.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.CI_GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.CI_NPM_TOKEN }}
+      - name: Setup Node.js (publish)
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check npm version
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        run: |
+          npm install -g npm@^11.5.1
+          v=$(npm -v)
+          echo "npm $v"
+          node -e "const [a,b,c]=process.argv[1].split('.').map(Number); process.exit(a>11||(a===11&&(b>5||(b===5&&c>=1)))?0:1)" "$v" \
+            || { echo "::error::npm $v is older than 11.5.1, trusted publishing needs 11.5.1+"; exit 1; }
+      - name: Publish to npm
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        run: npm publish

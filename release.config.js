@@ -4,7 +4,10 @@ module.exports = {
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
     ['@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' }],
-    ['@semantic-release/npm', { npmPublish: true, pkgRoot: '.' }],
+    // npmPublish is off: semantic-release 17 can't publish through npm trusted
+    // publishing (OIDC). It still writes the new version into package.json, and
+    // the "Publish to npm" step of release-and-publish.yml publishes it.
+    ['@semantic-release/npm', { npmPublish: false, pkgRoot: '.' }],
     [
       '@semantic-release/github',
       {
